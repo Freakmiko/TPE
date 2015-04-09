@@ -8,16 +8,16 @@ public class BTreeTest {
 
 	// Empty Tree
 	private BTree emptyTree = new BTreeImplementation(2);
-	//Tree with 2 Nodes
+	// Tree with 2 Nodes
 	private BTree smallTree = new BTreeImplementation(2);
-	//Tree with 3 Nodes
+	// Tree with 3 Nodes
 	private BTree bigTree = new BTreeImplementation(2);
-	//Tree for testing cloneDeep und addAll
+	// Tree for testing cloneDeep und addAll
 	private BTree otherTree = new BTreeImplementation(2);
 
 	@Before
 	public void beforeTest() throws Exception {
-		//Inserts the elements into "SmallTree".
+		// Inserts the elements into "SmallTree".
 		smallTree.insert(2);
 		smallTree.insert(4);
 		smallTree.insert(6);
@@ -26,7 +26,7 @@ public class BTreeTest {
 		smallTree.insert(14);
 		smallTree.insert(16);
 		smallTree.insert(18);
-		//Inserts the elements into "BigTree".
+		// Inserts the elements into "BigTree".
 		bigTree.insert(10);
 		bigTree.insert(20);
 		bigTree.insert(25);
@@ -39,7 +39,7 @@ public class BTreeTest {
 		bigTree.insert(80);
 		bigTree.insert(90);
 		bigTree.insert(100);
-		//Inserts the elements into "OtherTree".
+		// Inserts the elements into "OtherTree".
 		otherTree.insert(5);
 		otherTree.insert(15);
 		otherTree.insert(35);
@@ -98,9 +98,9 @@ public class BTreeTest {
 
 	@Test
 	public void addAllSimpleTest() throws Exception {
-		//Inserts the "OtherTree" into "EmptyTree".
+		// Inserts the "OtherTree" into "EmptyTree".
 		emptyTree.addAll(otherTree);
-		//is testing whether element is contains, the size and the height of the tree is correct.
+		// is testing whether element is contains, the size and the height of the tree is correct.
 		assertEquals(true, emptyTree.contains(5));
 		assertEquals(true, emptyTree.contains(15));
 		assertEquals(false, emptyTree.contains(25));
@@ -111,18 +111,18 @@ public class BTreeTest {
 
 	@Test
 	public void addAllSimpleEmptyTreeTest() throws Exception {
-		//Inserts the "EmptyTree" into "EmptyTree".
+		// Inserts the "EmptyTree" into "EmptyTree".
 		emptyTree.addAll(emptyTree);
-		//is testing whether the size and the height of the tree is correct.
+		// is testing whether the size and the height of the tree is correct.
 		assertEquals(0, emptyTree.size());
 		assertEquals(0, emptyTree.height());
 	}
 
 	@Test
 	public void addAllOtherEmptyTreeTest() throws Exception {
-		//Inserts the "EmptyTree" into "OtherTree".
+		// Inserts the "EmptyTree" into "OtherTree".
 		otherTree.addAll(emptyTree);
-		//is testing whether element is contains, the size and the height of the tree is correct.
+		// is testing whether element is contains, the size and the height of the tree is correct.
 		assertEquals(true, otherTree.contains(5));
 		assertEquals(true, otherTree.contains(15));
 		assertEquals(false, otherTree.contains(25));
@@ -133,9 +133,9 @@ public class BTreeTest {
 
 	@Test
 	public void addAllSmallTreeTest() throws Exception {
-		//Inserts "SmallTree" into "OtherTree".
+		// Inserts "SmallTree" into "OtherTree".
 		otherTree.addAll(smallTree);
-		//is testing whether element is contains, the size and the height of the tree is correct.
+		// is testing whether element is contains, the size and the height of the tree is correct.
 		assertEquals(11, otherTree.size());
 		assertEquals(2, otherTree.height());
 		assertEquals(true, otherTree.contains(2));
@@ -153,9 +153,9 @@ public class BTreeTest {
 
 	@Test
 	public void cloneDeepSimpleEmptyTreeTest() throws Exception {
-		//Creates a deep copy of "EmptyTree" in "EmptyTree".
+		// Creates a deep copy of "EmptyTree" in "EmptyTree".
 		emptyTree = BTreeImplementation.cloneDeep(emptyTree);
-		//is testing whether element is contains, the size and the height of the tree is correct.
+		// is testing whether element is contains, the size and the height of the tree is correct.
 		assertEquals(0, emptyTree.size());
 		assertEquals(0, emptyTree.height());
 		assertEquals(true, emptyTree.isEmpty());
@@ -163,9 +163,9 @@ public class BTreeTest {
 
 	@Test
 	public void cloneDeepEmptyTreeTest() throws Exception {
-		//Creates a deep copy of "OtherTree" in "EmptyTree".
+		// Creates a deep copy of "OtherTree" in "EmptyTree".
 		emptyTree = BTreeImplementation.cloneDeep(otherTree);
-		//is testing whether element is contains, the size and the height of the tree is correct.
+		// is testing whether element is contains, the size and the height of the tree is correct.
 		assertEquals(3, emptyTree.size());
 		assertEquals(1, emptyTree.height());
 		assertEquals(true, emptyTree.contains(5));
@@ -175,9 +175,9 @@ public class BTreeTest {
 
 	@Test
 	public void cloneDeepSimpleTreeTest() throws Exception {
-		//Creates a deep copy of "EmptyTree" in "OtherTree".
+		// Creates a deep copy of "EmptyTree" in "OtherTree".
 		otherTree = BTreeImplementation.cloneDeep(emptyTree);
-		//is testing whether element is contains, the size and the height of the tree is correct.
+		// is testing whether element is contains, the size and the height of the tree is correct.
 		assertEquals(0, otherTree.size());
 		assertEquals(0, otherTree.height());
 		assertEquals(true, otherTree.isEmpty());
@@ -185,9 +185,9 @@ public class BTreeTest {
 
 	@Test
 	public void cloneDeepSmallTreeTest() throws Exception {
-		//Creates a deep copy of "OtherTree" in "SmallTree".
+		// Creates a deep copy of "OtherTree" in "SmallTree".
 		smallTree = BTreeImplementation.cloneDeep(otherTree);
-		//is testing whether element is contains, the size and the height of the tree is correct.
+		// is testing whether element is contains, the size and the height of the tree is correct.
 		assertEquals(3, smallTree.size());
 		assertEquals(1, smallTree.height());
 		assertEquals(true, smallTree.contains(5));
@@ -199,9 +199,9 @@ public class BTreeTest {
 
 	@Test
 	public void cloneDeepTest() throws Exception {
-		//Creates a deep copy of "OtherTree" in "SmallTree".
+		// Creates a deep copy of "OtherTree" in "SmallTree".
 		smallTree = BTreeImplementation.cloneDeep(otherTree);
-		//is testing whether element is contains, the size and the height of the tree is correct.
+		// is testing whether element is contains, the size and the height of the tree is correct.
 		assertEquals(3, smallTree.size());
 		assertEquals(1, smallTree.height());
 		assertEquals(true, smallTree.contains(5));
@@ -209,9 +209,9 @@ public class BTreeTest {
 		assertEquals(true, smallTree.contains(35));
 		assertEquals(false, smallTree.contains(2));
 		assertEquals(false, smallTree.contains(18));
-		//Inserts one element into "OtherTree".
+		// Inserts one element into "OtherTree".
 		otherTree.insert(150);
-		//testing whether "SmallTree" is incorrectly changed.
+		// testing whether "SmallTree" is incorrectly changed.
 		assertEquals(3, smallTree.size());
 		assertEquals(1, smallTree.height());
 		assertEquals(true, smallTree.contains(5));
@@ -219,7 +219,7 @@ public class BTreeTest {
 		assertEquals(true, smallTree.contains(35));
 		assertEquals(false, smallTree.contains(2));
 		assertEquals(false, smallTree.contains(18));
-		//testing whether "OtherTree" is incorrectly changed..
+		// testing whether "OtherTree" is incorrectly changed..
 		assertEquals(1, otherTree.height());
 		assertEquals(4, otherTree.size());
 		assertEquals(true, otherTree.contains(5));
