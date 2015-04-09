@@ -68,6 +68,8 @@ public interface BTree {
 
     /**
      * This method prints the tree in-order
+     * [] denotes a Node
+     * <> denotes a leaf
      */
     void printInorder();
 

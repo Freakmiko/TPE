@@ -162,6 +162,9 @@ public class BTreeImplementation implements BTree {
             return false;
 
         Object file = openInputFile(filename);
+
+        // We loop through each number in the file and see if
+        // it already is in the tree, if it's not already there we insert it
         while(!isEndOfInputFile(file)) {
             int currentNumber = readInt(file);
             if(!contains(currentNumber)) {
@@ -234,6 +237,9 @@ public class BTreeImplementation implements BTree {
     private Integer getMax(Node node) {
         int currMax = 0;
         int currMaxIndex = 0;
+
+        // We loop through each element in a node
+        // and mark the maximum of the node
         for(int i = 0; i < order * 2; i++) {
             if(node.getKeys()[0] == null) {
                 return -1;
@@ -244,6 +250,8 @@ public class BTreeImplementation implements BTree {
             }
         }
 
+        // If our current maximum element has a right child
+        // it's not our actual maximum so we recursively call getMax with the child
         if(node.getSubNodes()[currMaxIndex + 1] != null) {
             return getMax(node.getSubNodes()[currMaxIndex + 1]);
         } else {
@@ -257,6 +265,8 @@ public class BTreeImplementation implements BTree {
     }
 
     private Integer getMin(Node node) {
+        // For the smalles element we only need to look through
+        // the left children of our nodes and the leftmost element in a node
         if(node.getSubNodes()[0] == null)
             return node.getKeys()[0] == null ? -1 : node.getKeys()[0];
         else
@@ -298,7 +308,7 @@ public class BTreeImplementation implements BTree {
         if(node.getSubNodes()[0] == null) {
             output += "<";
             for(int i = 0; i < order * 2; i++) {
-                output += node.getKeys()[i] == null ? "" : node.getKeys()[i] + " ";
+                output += node.getKeys()[i] == null ? "" :" " + node.getKeys()[i] + " ";
             }
             output += ">";
             return output;
@@ -306,7 +316,7 @@ public class BTreeImplementation implements BTree {
             output += "[";
             for (int i = 0; i < order * 2 + 1; i++) {
                 output += printInorder(node.getSubNodes()[i]);
-                output += node.getKeys()[i] == null ? "" : node.getKeys()[i] + " ";
+                output += node.getKeys()[i] == null ? "" :" " +  node.getKeys()[i] + " ";
             }
             output += "]";
             return output;
