@@ -41,7 +41,7 @@ public class BTreeImplementation implements BTree {
         // Otherwise the node has children and we try to insert it in the left child
         // of the current element.
         if(node.getKeys()[keyIndex] == null && node.getSubNodes()[keyIndex] == null) {
-            // If our node is full and the a new element is inserted we have to balance the tree
+            // If our node is full and the new element is inserted we have to balance the tree
             if(node.insert(keyIndex, o))
                 balance(node);
             return true;
@@ -54,8 +54,8 @@ public class BTreeImplementation implements BTree {
             return false;
 
         // If our current element is greater than the integer we want to insert
-        // and it doesn't have children we insert it at the current index and rebalance if needed
-        // should it have children we recursively call insert on that child
+        // and it doesn't have children, we insert it at the current index and rebalance if needed
+        // if it has children we recursively call insert on that child
         if(node.getKeys()[keyIndex] > o) {
             if(node.getSubNodes()[keyIndex] == null) {
                 if(node.insert(keyIndex, o))
@@ -88,7 +88,7 @@ public class BTreeImplementation implements BTree {
             Node curParent = node.getParent();
             int maxIndex = 0;
 
-            // Here look for the largest element that is still
+            // Here we look for the largest element that is still
             // smaller than our median in the parent,
             // that way we can insert the median at the right position
             for(int i = 0; i < order * 2; i++)
@@ -144,7 +144,7 @@ public class BTreeImplementation implements BTree {
                 childRight.getSubNodes()[tempIndex].setParent(childRight);
 
             // if we're on the last index we need
-            // to reconnect the child of our median too
+            // to reconnect the child last too
             if(i == node.getKeys().length - 1) {
                 childRight.getSubNodes()[tempIndex + 1] = node.getSubNodes()[i + 1];
                 if(childRight.getSubNodes()[tempIndex] != null)
@@ -241,9 +241,9 @@ public class BTreeImplementation implements BTree {
         // We loop through each element in a node
         // and mark the maximum of the node
         for(int i = 0; i < order * 2; i++) {
-            if(node.getKeys()[0] == null) {
+            if(node.getKeys()[0] == null)
                 return -1;
-            }
+
             if(node.getKeys()[i] != null) {
                 currMax = node.getKeys()[i];
                 currMaxIndex = i;
@@ -252,11 +252,10 @@ public class BTreeImplementation implements BTree {
 
         // If our current maximum element has a right child
         // it's not our actual maximum so we recursively call getMax with the child
-        if(node.getSubNodes()[currMaxIndex + 1] != null) {
+        if(node.getSubNodes()[currMaxIndex + 1] != null)
             return getMax(node.getSubNodes()[currMaxIndex + 1]);
-        } else {
+        else
             return currMax;
-        }
     }
 
     @Override
@@ -307,9 +306,8 @@ public class BTreeImplementation implements BTree {
             return output;
         if(node.getSubNodes()[0] == null) {
             output += "<";
-            for(int i = 0; i < order * 2; i++) {
-                output += node.getKeys()[i] == null ? "" :" " + node.getKeys()[i] + " ";
-            }
+            for(int i = 0; i < order * 2; i++)
+                output += node.getKeys()[i] == null ? "" : " " + node.getKeys()[i] + " ";
             output += ">";
             return output;
         } else {
@@ -333,17 +331,14 @@ public class BTreeImplementation implements BTree {
         if(node == null)
             return output;
         if(node.getSubNodes()[0] == null) {
-            for(int i = 0; i < order * 2; i++) {
+            for(int i = 0; i < order * 2; i++)
                 output += node.getKeys()[i] == null ? "" : node.getKeys()[i] + " ";
-            }
             return output;
         } else {
-            for (int i = 0; i < order * 2 + 1; i++) {
+            for (int i = 0; i < order * 2 + 1; i++)
                 output += printPostorder(node.getSubNodes()[i]);
-            }
-            for(int i = 0; i < order * 2; i++) {
+            for(int i = 0; i < order * 2; i++)
                 output += node.getKeys()[i] == null ? "" : node.getKeys()[i] + " ";
-            }
             return output;
         }
     }
@@ -358,17 +353,14 @@ public class BTreeImplementation implements BTree {
         if(node == null)
             return output;
         if(node.getSubNodes()[0] == null) {
-            for(int i = 0; i < order * 2; i++) {
+            for(int i = 0; i < order * 2; i++)
                 output += node.getKeys()[i] == null ? "" : node.getKeys()[i] + " ";
-            }
             return output;
         } else {
-            for(int i = 0; i < order * 2; i++) {
+            for(int i = 0; i < order * 2; i++)
                 output += node.getKeys()[i] == null ? "" : node.getKeys()[i] + " ";
-            }
-            for (int i = 0; i < order * 2 + 1; i++) {
+            for (int i = 0; i < order * 2 + 1; i++)
                 output += printPreorder(node.getSubNodes()[i]);
-            }
             return output;
         }
     }
@@ -381,9 +373,9 @@ public class BTreeImplementation implements BTree {
 
         while(!queue.isEmpty()) {
             Node n = queue.leave();
-            for(int i = 0; i < order * 2; i++) {
+            for(int i = 0; i < order * 2; i++)
                 output += n.getKeys()[i] == null ? "" : n.getKeys()[i] + " ";
-            }
+
             for(int i = 0; i < order * 2 + 1; i++) {
                 if(n.getSubNodes()[i] != null)
                     queue.enter(n.getSubNodes()[i]);
@@ -402,9 +394,9 @@ public class BTreeImplementation implements BTree {
 
         while(!queue.isEmpty()) {
             Node n = queue.leave();
-            for(int i = 0; i < order * 2; i++) {
-                output += n.getKeys()[i] == null ? "" : " " + n.getKeys()[i] ;
-            }
+            for(int i = 0; i < order * 2; i++)
+                output += n.getKeys()[i] == null ? "" : " " + n.getKeys()[i];
+
             for(int i = 0; i < order * 2 + 1; i++) {
                 if(n.getSubNodes()[i] != null)
                     queue.enter(n.getSubNodes()[i]);
