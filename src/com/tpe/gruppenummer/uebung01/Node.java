@@ -99,7 +99,7 @@ public class Node {
 
     /**
      * Sets the keys of the node
-     * @param keys nthe new keys
+     * @param keys the new keys
      */
     public void setKeys(Integer[] keys) {
         this.keys = keys;
