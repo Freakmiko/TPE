@@ -40,13 +40,13 @@ public class BTreeImplementation implements BTree {
         // we can insert the integer at the current index.
         // Otherwise the node has children and we try to insert it in the left child
         // of the current element.
-        if(node.getKeys()[keyIndex] == null && node.getSubNodes()[keyIndex] == null) {
+        if(node.getKeys()[keyIndex] == null && node.getChildren()[keyIndex] == null) {
             // If our node is full and the new element is inserted we have to balance the tree
             if(node.insert(keyIndex, o))
                 balance(node);
             return true;
         } else if(node.getKeys()[keyIndex] == null) {
-            return insert(node.getSubNodes()[keyIndex], 0, o);
+            return insert(node.getChildren()[keyIndex], 0, o);
         }
 
         // Should the element already be in the node we return false to indicate that
@@ -57,12 +57,12 @@ public class BTreeImplementation implements BTree {
         // and it doesn't have children, we insert it at the current index and rebalance if needed
         // if it has children we recursively call insert on that child
         if(node.getKeys()[keyIndex] > o) {
-            if(node.getSubNodes()[keyIndex] == null) {
+            if(node.getChildren()[keyIndex] == null) {
                 if(node.insert(keyIndex, o))
                     balance(node);
                 return true;
             } else {
-                return insert(node.getSubNodes()[keyIndex], 0, o);
+                return insert(node.getChildren()[keyIndex], 0, o);
             }
         } else {
             // If the current element is less than the integer we want to insert
@@ -112,43 +112,43 @@ public class BTreeImplementation implements BTree {
         // Here we create the new children of the new balanced node
         // the left child has all the values smaller than our median
         Node childLeft = new Node(order, newParent);
-        newParent.getSubNodes()[indexOfInserted] = childLeft;
+        newParent.getChildren()[indexOfInserted] = childLeft;
         for (int i = 0; i < order; i++) {
             childLeft.insert(i, node.getKeys()[i]);
             // if the elements have children we need to reconnect them too
-            childLeft.getSubNodes()[i] = node.getSubNodes()[i];
+            childLeft.getChildren()[i] = node.getChildren()[i];
             // and also reparent them
-            if(childLeft.getSubNodes()[i] != null)
-                childLeft.getSubNodes()[i].setParent(childLeft);
+            if(childLeft.getChildren()[i] != null)
+                childLeft.getChildren()[i].setParent(childLeft);
 
             // if we're on the last index before the median we need
             // to reconnect the child of our median too
             if(i == order - 1) {
-                childLeft.getSubNodes()[i + 1] = node.getSubNodes()[i + 1];
-                if(childLeft.getSubNodes()[i] != null)
-                    childLeft.getSubNodes()[i + 1].setParent(childLeft);
+                childLeft.getChildren()[i + 1] = node.getChildren()[i + 1];
+                if(childLeft.getChildren()[i] != null)
+                    childLeft.getChildren()[i + 1].setParent(childLeft);
             }
         }
 
         // and the right child has all the values larger than our median
         Node childRight = new Node(order, newParent);
-        newParent.getSubNodes()[indexOfInserted + 1] = childRight;
+        newParent.getChildren()[indexOfInserted + 1] = childRight;
         for (int i = order + 1; i < node.getKeys().length; i++) {
             // tempIndex is just there to shorten the other lines
             int tempIndex = i - (order + 1);
             // if the elements have children we need to reconnect them too
             childRight.insert(tempIndex, node.getKeys()[i]);
-            childRight.getSubNodes()[tempIndex] = node.getSubNodes()[i];
+            childRight.getChildren()[tempIndex] = node.getChildren()[i];
 
-            if(childRight.getSubNodes()[tempIndex] != null)
-                childRight.getSubNodes()[tempIndex].setParent(childRight);
+            if(childRight.getChildren()[tempIndex] != null)
+                childRight.getChildren()[tempIndex].setParent(childRight);
 
             // if we're on the last index we need
             // to reconnect the child last too
             if(i == node.getKeys().length - 1) {
-                childRight.getSubNodes()[tempIndex + 1] = node.getSubNodes()[i + 1];
-                if(childRight.getSubNodes()[tempIndex] != null)
-                    childRight.getSubNodes()[tempIndex + 1].setParent(childRight);
+                childRight.getChildren()[tempIndex + 1] = node.getChildren()[i + 1];
+                if(childRight.getChildren()[tempIndex] != null)
+                    childRight.getChildren()[tempIndex + 1].setParent(childRight);
             }
         }
 
@@ -186,13 +186,13 @@ public class BTreeImplementation implements BTree {
 
     private boolean contains(Node node, int keyIndex, Integer o) {
         if(node.getKeys()[keyIndex] == null)
-            return node.getSubNodes()[keyIndex] != null && contains(node.getSubNodes()[keyIndex], 0, o);
+            return node.getChildren()[keyIndex] != null && contains(node.getChildren()[keyIndex], 0, o);
 
         if(node.getKeys()[keyIndex].intValue() == o.intValue())
             return true;
 
         if(node.getKeys()[keyIndex] > o)
-            return node.getSubNodes()[keyIndex] != null && contains(node.getSubNodes()[keyIndex], 0, o);
+            return node.getChildren()[keyIndex] != null && contains(node.getChildren()[keyIndex], 0, o);
         else
             return contains(node, keyIndex + 1, o);
     }
@@ -207,8 +207,8 @@ public class BTreeImplementation implements BTree {
             Node n = queue.leave();
             size += n.size();
             for(int i = 0; i < order * 2 + 1; i++) {
-                if(n.getSubNodes()[i] != null)
-                    queue.enter(n.getSubNodes()[i]);
+                if(n.getChildren()[i] != null)
+                    queue.enter(n.getChildren()[i]);
             }
         }
 
@@ -222,10 +222,10 @@ public class BTreeImplementation implements BTree {
 
     private int height(Node node) {
         int count = 1;
-        if(node.getSubNodes()[0] == null)
+        if(node.getChildren()[0] == null)
             return count;
         else
-            count += height(node.getSubNodes()[0]);
+            count += height(node.getChildren()[0]);
         return count;
     }
 
@@ -252,8 +252,8 @@ public class BTreeImplementation implements BTree {
 
         // If our current maximum element has a right child
         // it's not our actual maximum so we recursively call getMax with the child
-        if(node.getSubNodes()[currMaxIndex + 1] != null)
-            return getMax(node.getSubNodes()[currMaxIndex + 1]);
+        if(node.getChildren()[currMaxIndex + 1] != null)
+            return getMax(node.getChildren()[currMaxIndex + 1]);
         else
             return currMax;
     }
@@ -266,10 +266,10 @@ public class BTreeImplementation implements BTree {
     private Integer getMin(Node node) {
         // For the smalles element we only need to look through
         // the left children of our nodes and the leftmost element in a node
-        if(node.getSubNodes()[0] == null)
+        if(node.getChildren()[0] == null)
             return node.getKeys()[0] == null ? -1 : node.getKeys()[0];
         else
-            return getMin(node.getSubNodes()[0]);
+            return getMin(node.getChildren()[0]);
     }
 
     @Override
@@ -304,13 +304,13 @@ public class BTreeImplementation implements BTree {
         String output = "";
         if(node == null)
             return output;
-        if(node.getSubNodes()[0] == null) {
+        if(node.getChildren()[0] == null) {
             for(int i = 0; i < order * 2; i++)
                 output += node.getKeys()[i] == null ? "" : " " + node.getKeys()[i] + " ";
             return output;
         } else {
             for (int i = 0; i < order * 2 + 1; i++) {
-                output += printInorder(node.getSubNodes()[i]);
+                output += printInorder(node.getChildren()[i]);
                 output += node.getKeys()[i] == null ? "" :" " +  node.getKeys()[i] + " ";
             }
             return output;
@@ -326,13 +326,13 @@ public class BTreeImplementation implements BTree {
         String output = "";
         if(node == null)
             return output;
-        if(node.getSubNodes()[0] == null) {
+        if(node.getChildren()[0] == null) {
             for(int i = 0; i < order * 2; i++)
                 output += node.getKeys()[i] == null ? "" : node.getKeys()[i] + " ";
             return output;
         } else {
             for (int i = 0; i < order * 2 + 1; i++)
-                output += printPostorder(node.getSubNodes()[i]);
+                output += printPostorder(node.getChildren()[i]);
             for(int i = 0; i < order * 2; i++)
                 output += node.getKeys()[i] == null ? "" : node.getKeys()[i] + " ";
             return output;
@@ -348,7 +348,7 @@ public class BTreeImplementation implements BTree {
         String output = "";
         if(node == null)
             return output;
-        if(node.getSubNodes()[0] == null) {
+        if(node.getChildren()[0] == null) {
             for(int i = 0; i < order * 2; i++)
                 output += node.getKeys()[i] == null ? "" : node.getKeys()[i] + " ";
             return output;
@@ -356,7 +356,7 @@ public class BTreeImplementation implements BTree {
             for(int i = 0; i < order * 2; i++)
                 output += node.getKeys()[i] == null ? "" : node.getKeys()[i] + " ";
             for (int i = 0; i < order * 2 + 1; i++)
-                output += printPreorder(node.getSubNodes()[i]);
+                output += printPreorder(node.getChildren()[i]);
             return output;
         }
     }
@@ -373,8 +373,8 @@ public class BTreeImplementation implements BTree {
                 output += n.getKeys()[i] == null ? "" : n.getKeys()[i] + " ";
 
             for(int i = 0; i < order * 2 + 1; i++) {
-                if(n.getSubNodes()[i] != null)
-                    queue.enter(n.getSubNodes()[i]);
+                if(n.getChildren()[i] != null)
+                    queue.enter(n.getChildren()[i]);
             }
         }
 
@@ -394,8 +394,8 @@ public class BTreeImplementation implements BTree {
                 output += n.getKeys()[i] == null ? "" : " " + n.getKeys()[i];
 
             for(int i = 0; i < order * 2 + 1; i++) {
-                if(n.getSubNodes()[i] != null)
-                    queue.enter(n.getSubNodes()[i]);
+                if(n.getChildren()[i] != null)
+                    queue.enter(n.getChildren()[i]);
             }
         }
 
