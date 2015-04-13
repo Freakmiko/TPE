@@ -67,18 +67,20 @@ public interface BTree {
 
     /**
      * This method prints the tree in-order
-     * [] denotes a Node
-     * <> denotes a leaf
+     * The natural order is contained as the left child of each
+     * element is printed before the element thus printing numbers in order
      */
     void printInorder();
 
     /**
      * This method prints the tree post-order
+     * All the children get printed completely before their parent
      */
     void printPostorder();
 
     /**
      * This method prints the tree pre-order
+     * The parent node gets printed completely before its children
      */
     void printPreorder();
 
