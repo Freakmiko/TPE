@@ -1,7 +1,7 @@
-package com.tpe.gruppenummer.uebung01;
+package tpe.gruppenummer.uebung01;
 
-import com.tpe.gruppenummer.utils.QueueImpl;
-import com.tpe.gruppenummer.utils.Queue;
+import tpe.gruppenummer.utils.QueueImpl;
+import tpe.gruppenummer.utils.Queue;
 
 import static gdi.MakeItSimple.*;
 

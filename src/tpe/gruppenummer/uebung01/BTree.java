@@ -1,4 +1,4 @@
-package com.tpe.gruppenummer.uebung01;
+package tpe.gruppenummer.uebung01;
 
 public interface BTree {
 
@@ -62,7 +62,6 @@ public interface BTree {
      * This method adds all the elements from otherTree and the current tree
      * into a new tree.
      * @param otherTree The tree from whose elements should be added.
-     * @return A new tree with the elements from both trees.
      */
     void addAll(BTree otherTree);
 

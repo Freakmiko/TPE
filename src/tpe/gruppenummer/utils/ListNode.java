@@ -1,7 +1,7 @@
-package com.tpe.gruppenummer.utils;
+package tpe.gruppenummer.utils;
 
 
-import com.tpe.gruppenummer.uebung01.Node;
+import tpe.gruppenummer.uebung01.Node;
 
 /**
  * The class ListNode is a helper class for every kind of LinkedLists

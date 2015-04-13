@@ -1,12 +1,9 @@
-package com.tpe.gruppenummer.uebung01;
+package tpe.gruppenummer.uebung01;
 
 import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-/**
- * Created by Michael on 02.04.2015.
- */
 public class NodeTest {
 
     @Test

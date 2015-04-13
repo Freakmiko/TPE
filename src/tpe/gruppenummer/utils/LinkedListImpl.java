@@ -1,6 +1,6 @@
-package com.tpe.gruppenummer.utils;
+package tpe.gruppenummer.utils;
 
-import com.tpe.gruppenummer.uebung01.Node;
+import tpe.gruppenummer.uebung01.Node;
 import gdi.MakeItSimple.*;
 
 public class LinkedListImpl implements LinkedList {

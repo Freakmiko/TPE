@@ -1,4 +1,4 @@
-package com.tpe.gruppenummer.uebung01;
+package tpe.gruppenummer.uebung01;
 
 public class Node {
 
