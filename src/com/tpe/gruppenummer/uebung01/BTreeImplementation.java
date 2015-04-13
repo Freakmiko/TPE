@@ -305,18 +305,14 @@ public class BTreeImplementation implements BTree {
         if(node == null)
             return output;
         if(node.getSubNodes()[0] == null) {
-            output += "<";
             for(int i = 0; i < order * 2; i++)
                 output += node.getKeys()[i] == null ? "" : " " + node.getKeys()[i] + " ";
-            output += ">";
             return output;
         } else {
-            output += "[";
             for (int i = 0; i < order * 2 + 1; i++) {
                 output += printInorder(node.getSubNodes()[i]);
                 output += node.getKeys()[i] == null ? "" :" " +  node.getKeys()[i] + " ";
             }
-            output += "]";
             return output;
         }
     }
