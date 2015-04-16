@@ -10,7 +10,14 @@ public class BTreeImplementation implements BTree {
     Node root;
     int order;
 
+    /**
+     * Creates the BTree with the given order
+     * @param order the order of the tree (can't be <= 0)
+     */
     BTreeImplementation(int order) {
+        if(order <= 0)
+            order = 1;
+
         this.order = order;
         root = new Node(order);
     }
