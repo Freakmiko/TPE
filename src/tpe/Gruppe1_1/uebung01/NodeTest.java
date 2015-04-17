@@ -1,4 +1,4 @@
-package tpe.GruppeXY.uebung01;
+package tpe.Gruppe1_1.uebung01;
 
 import org.junit.Test;
 

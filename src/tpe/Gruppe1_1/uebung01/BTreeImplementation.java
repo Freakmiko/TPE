@@ -1,7 +1,7 @@
-package tpe.GruppeXY.uebung01;
+package tpe.Gruppe1_1.uebung01;
 
-import tpe.GruppeXY.utils.QueueImpl;
-import tpe.GruppeXY.utils.Queue;
+import tpe.Gruppe1_1.utils.QueueImpl;
+import tpe.Gruppe1_1.utils.Queue;
 
 import static gdi.MakeItSimple.*;
 
