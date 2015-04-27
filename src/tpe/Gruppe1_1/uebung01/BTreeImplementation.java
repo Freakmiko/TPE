@@ -38,11 +38,14 @@ public class BTreeImplementation implements BTree {
     }
 
     @Override
-    public boolean insert(Integer o) {
-        return insert(root, 0, o);
+    public boolean insert(Comparable o) {
+        if (root.getKeys()[0] == null)
+            return insert(root, 0, o);
+
+        return root.getKeys()[0].getClass() == o.getClass() && insert(root, 0, o);
     }
 
-    private boolean insert(Node node,int keyIndex, Integer o) {
+    private boolean insert(Node node,int keyIndex, Comparable o) {
         // If our current element is null and it doesn't have children
         // we can insert the integer at the current index.
         // Otherwise the node has children and we try to insert it in the left child
@@ -57,13 +60,13 @@ public class BTreeImplementation implements BTree {
         }
 
         // Should the element already be in the node we return false to indicate that
-        if(node.getKeys()[keyIndex].intValue() == o.intValue())
+        if(node.getKeys()[keyIndex].compareTo(o) == 0)
             return false;
 
         // If our current element is greater than the integer we want to insert
         // and it doesn't have children, we insert it at the current index and rebalance if needed
         // if it has children we recursively call insert on that child
-        if(node.getKeys()[keyIndex] > o) {
+        if(node.getKeys()[keyIndex].compareTo(o)>= 1) {
             if(node.getChildren()[keyIndex] == null) {
                 if(node.insert(keyIndex, o))
                     balance(node);
@@ -79,7 +82,7 @@ public class BTreeImplementation implements BTree {
     }
 
     private void balance(Node node) {
-        Integer median = node.getKeys()[order];
+        Comparable median = node.getKeys()[order];
         int indexOfInserted = 0;
         Node newParent;
         boolean needsRebalancing = false;
@@ -99,13 +102,13 @@ public class BTreeImplementation implements BTree {
             // smaller than our median in the parent,
             // that way we can insert the median at the right position
             for(int i = 0; i < order * 2; i++)
-                if (curParent.getKeys()[i] != null && curParent.getKeys()[i] < median)
+                if (curParent.getKeys()[i] != null && curParent.getKeys()[i].compareTo(median)<= -1)
                     maxIndex = i;
 
             // Should the current maximum Index still be larger than our median
             // we insert the median BEFORE that index
             // otherwise we insert it AFTER the maximum Index
-            if(curParent.getKeys()[maxIndex] > median) {
+            if(curParent.getKeys()[maxIndex].compareTo(median)>= 1) {
                 needsRebalancing = curParent.insert(maxIndex, median);
                 indexOfInserted = maxIndex;
             } else {
@@ -187,18 +190,22 @@ public class BTreeImplementation implements BTree {
     }
 
     @Override
-    public boolean contains(Integer o) {
+    public boolean contains(Comparable o) {
+        if(root.getKeys()[0] == null)
+            return false;
+        else if(root.getKeys()[0].getClass() != o.getClass())
+            return false;
         return contains(root, 0, o);
     }
 
-    private boolean contains(Node node, int keyIndex, Integer o) {
+    private boolean contains(Node node, int keyIndex, Comparable o) {
         if(node.getKeys()[keyIndex] == null)
             return node.getChildren()[keyIndex] != null && contains(node.getChildren()[keyIndex], 0, o);
 
-        if(node.getKeys()[keyIndex].intValue() == o.intValue())
+        if(node.getKeys()[keyIndex].compareTo(o) == 0)
             return true;
 
-        if(node.getKeys()[keyIndex] > o)
+        if(node.getKeys()[keyIndex].compareTo(o)>= 1)
             return node.getChildren()[keyIndex] != null && contains(node.getChildren()[keyIndex], 0, o);
         else
             return contains(node, keyIndex + 1, o);
@@ -237,12 +244,12 @@ public class BTreeImplementation implements BTree {
     }
 
     @Override
-    public Integer getMax() {
+    public Comparable getMax() {
         return getMax(root);
     }
 
-    private Integer getMax(Node node) {
-        int currMax = 0;
+    private Comparable getMax(Node node) {
+        Comparable currMax = 0;
         int currMaxIndex = 0;
 
         // We loop through each element in a node
@@ -266,11 +273,11 @@ public class BTreeImplementation implements BTree {
     }
 
     @Override
-    public Integer getMin() {
+    public Comparable getMin() {
         return getMin(root);
     }
 
-    private Integer getMin(Node node) {
+    private Comparable getMin(Node node) {
         // For the smalles element we only need to look through
         // the left children of our nodes and the leftmost element in a node
         if(node.getChildren()[0] == null)
@@ -312,14 +319,18 @@ public class BTreeImplementation implements BTree {
         if(node == null)
             return output;
         if(node.getChildren()[0] == null) {
+            output += "<";
             for(int i = 0; i < order * 2; i++)
                 output += node.getKeys()[i] == null ? "" : " " + node.getKeys()[i] + " ";
+            output += ">";
             return output;
         } else {
+            output += "[";
             for (int i = 0; i < order * 2 + 1; i++) {
                 output += printInorder(node.getChildren()[i]);
                 output += node.getKeys()[i] == null ? "" :" " +  node.getKeys()[i] + " ";
             }
+            output += "]";
             return output;
         }
     }

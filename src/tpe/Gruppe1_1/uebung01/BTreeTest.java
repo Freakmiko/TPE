@@ -15,6 +15,8 @@ public class BTreeTest {
 	// Tree for testing cloneDeep und addAll
 	private BTree otherTree = new BTreeImplementation(2);
 
+	private BTree stringTree = new BTreeImplementation(2);
+
 	@Before
 	public void beforeTest() throws Exception {
 		// Inserts the elements into "SmallTree".
@@ -43,17 +45,29 @@ public class BTreeTest {
 		otherTree.insert(5);
 		otherTree.insert(15);
 		otherTree.insert(35);
+
+
+		stringTree.insert('A');
+		stringTree.insert('B');
+		stringTree.insert('G');
+		stringTree.insert('J');
+		stringTree.insert('Z');
+		stringTree.insert('X');
+		stringTree.insert('O');
+
 	}
 
 	@Test
 	public void containsTest() throws Exception {
-		assertEquals(false, emptyTree.contains(1) );
+		assertEquals(false, emptyTree.contains(1));
 		assertEquals(false, smallTree.contains(1));
 		assertEquals(true, smallTree.contains(2));
 		assertEquals(false, bigTree.contains(5));
 		assertEquals(true, bigTree.contains(20));
 		assertEquals(false, otherTree.contains(2));
 		assertEquals(true, otherTree.contains(5));
+		assertEquals(true, stringTree.contains('Z'));
+		assertEquals(false, stringTree.contains('R'));
 	}
 
 	@Test
@@ -62,6 +76,7 @@ public class BTreeTest {
 		assertEquals(8, smallTree.size());
 		assertEquals(12, bigTree.size());
 		assertEquals(3, otherTree.size());
+		assertEquals(7, stringTree.size());
 	}
 
 	@Test
@@ -70,22 +85,25 @@ public class BTreeTest {
 		assertEquals(2, smallTree.height());
 		assertEquals(2, bigTree.height());
 		assertEquals(1, otherTree.height());
+		assertEquals(2, stringTree.height());
 	}
 
 	@Test
 	public void getMaxTest() throws Exception {
-		assertEquals(new Integer(-1), emptyTree.getMax());
-		assertEquals(new Integer(18), smallTree.getMax());
-		assertEquals(new Integer(100), bigTree.getMax());
-		assertEquals(new Integer(35), otherTree.getMax());
+		assertEquals(-1, emptyTree.getMax());
+		assertEquals(18, smallTree.getMax());
+		assertEquals(100, bigTree.getMax());
+		assertEquals(35, otherTree.getMax());
+		assertEquals('Z', stringTree.getMax());
 	}
 
 	@Test
 	public void getMinTest() throws Exception{
-		assertEquals(new Integer(-1), emptyTree.getMin());
-		assertEquals(new Integer(2), smallTree.getMin());
-		assertEquals(new Integer(10), bigTree.getMin());
-		assertEquals(new Integer(5), otherTree.getMin());
+		assertEquals(-1, emptyTree.getMin());
+		assertEquals(2, smallTree.getMin());
+		assertEquals(10, bigTree.getMin());
+		assertEquals(5, otherTree.getMin());
+		assertEquals('A', stringTree.getMin());
 	}
 
 	@Test
@@ -94,6 +112,7 @@ public class BTreeTest {
 		assertEquals(false, smallTree.isEmpty());
 		assertEquals(false, bigTree.isEmpty());
 		assertEquals(false, otherTree.isEmpty());
+		assertEquals(false, stringTree.isEmpty());
 	}
 
 	@Test

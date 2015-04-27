@@ -9,7 +9,7 @@ public interface BTree {
      * @return Returns true if the Integer was successfully inserted and
      *         false if the Integer was already in the tree.
      */
-    boolean insert (Integer o);
+    boolean insert (Comparable o);
 
     /**
      * This method inserts all Integers in a file
@@ -26,7 +26,7 @@ public interface BTree {
      * @param o The value to be checked
      * @return Returns true if the value is contained in the tree and false if it isn't.
      */
-    boolean contains (Integer o);
+    boolean contains (Comparable o);
 
     /**
      * This method returns the size of the tree.
@@ -44,13 +44,13 @@ public interface BTree {
      * This method returns the largest Integer in the tree.
      * @return The largest Integer.
      */
-    Integer getMax();
+    Comparable getMax();
 
     /**
      * This method returns the smallest Integer in the tree.
      * @return The smallest Integer.
      */
-    Integer getMin();
+    Comparable getMin();
 
     /**
      * This method checks if the Tree is empty
