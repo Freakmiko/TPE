@@ -101,4 +101,11 @@ public interface BTree {
      */
     int getOrder();
 
+
+    /**
+     * This method removes the object from the tree
+     * @param o The object to remove
+     * @return returns true if the object was deleted and false if it wasn't
+     */
+    boolean remove(Comparable o);
 }

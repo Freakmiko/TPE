@@ -45,6 +45,28 @@ public class Node {
     }
 
     /**
+     * Removes the Integer from the Node.
+     * @param o The integer to remove.
+     */
+    void remove(Comparable o) {
+        int nodeToRemove = -1;
+
+        for(int i = 0; i < getKeys().length; i++) {
+            if(getKeys()[i] != null && getKeys()[i].compareTo(o) == 0)
+                nodeToRemove = i;
+        }
+
+        if(nodeToRemove == -1)
+            return;
+
+
+        for(int i = nodeToRemove; i < getKeys().length - 1; i++) {
+            getKeys()[i] = getKeys()[i + 1];
+            getChildren()[i] = getChildren()[i + 1];
+        }
+    }
+
+    /**
      * Counts the elements in the node
      * @return the number of elements
      */

@@ -419,4 +419,70 @@ public class BTreeImplementation implements BTree {
 
         return output;
     }
+
+    private Node findObject(Node node, Comparable o) {
+        if(node.getChildren()[0] == null) {
+            for(int i = 0; i < node.size(); i++) {
+                if(node.getKeys()[i].compareTo(o) == 0)
+                    return node;
+            }
+            return null;
+        }
+
+        for(int i = 0; i < node.size(); i++) {
+            if(node.getKeys()[i].compareTo(o) == 0)
+                return node;
+            if(node.getKeys()[i].compareTo(o) >= 1)
+                return findObject(node.getChildren()[i], o);
+            if(i == node.size() - 1)
+                return findObject(node.getChildren()[i+1], o);
+        }
+
+        return null;
+    }
+
+    @Override
+    public boolean remove(Comparable o) {
+        return contains(o) && remove(findObject(root, o), 0, o);
+    }
+
+    private boolean remove(Node node, int index, Comparable o) {
+        if(node.getChildren()[0] == null)
+            node.remove(o);
+
+        if(node.size() < order)
+            if(node.getKeys()[0] != null)
+                rebalance(node);
+
+        // TODO: Change
+        return false;
+    }
+
+    private void rebalance(Node node) {
+        int rightParentIndex = 0;
+
+        for(int i = 0; i < node.getParent().size() + 1; i++) {
+            if(node.getParent().getChildren()[i] == node)
+                rightParentIndex = i;
+        }
+
+        Node rightSibling = null, leftSibling = null;
+
+        if(rightParentIndex < order + 1)
+            rightSibling = node.getParent().getChildren()[rightParentIndex + 1];
+        if(rightParentIndex > 0)
+            leftSibling = node.getParent().getChildren()[rightParentIndex - 1];
+
+        if(rightSibling != null && rightSibling.size() - 1 >= order) {
+            rotateLeft(node, rightSibling, rightParentIndex, 0, order - 1);
+        } else if (leftSibling != null && leftSibling.size() - 1 >= order) {
+            rotateLeft(node, leftSibling, rightParentIndex - 1, leftSibling.size() - 1, 0);
+        }
+    }
+
+    private void rotateLeft(Node deficientNode, Node nodeWithEnoughElements, int parentIndex, int insertPosition1, int insertPosition2) {
+        deficientNode.insert(insertPosition2, deficientNode.getParent().getKeys()[parentIndex]);
+        deficientNode.getParent().getKeys()[parentIndex] = nodeWithEnoughElements.getKeys()[insertPosition1];
+        nodeWithEnoughElements.remove(nodeWithEnoughElements.getKeys()[insertPosition1]);
+    }
 }
