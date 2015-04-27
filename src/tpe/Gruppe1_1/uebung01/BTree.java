@@ -3,25 +3,25 @@ package tpe.Gruppe1_1.uebung01;
 public interface BTree {
 
     /**
-     * This method inserts the given Integer into
+     * This method inserts the given comparable into
      * the tree and balances it if needed.
      * @param o The value to be inserted.
-     * @return Returns true if the Integer was successfully inserted and
-     *         false if the Integer was already in the tree.
+     * @return Returns true if the comparable was successfully inserted and
+     *         false if the comparable was already in the tree.
      */
     boolean insert (Comparable o);
 
     /**
-     * This method inserts all Integers in a file
+     * This method inserts all comparables in a file
      * into the tree and balances it if needed.
      * @param filename The Path of the file to be inserted.
-     * @return Returns true if the Integer was successfully inserted and
-     *         false if the Integer was already in the tree.
+     * @return Returns true if the comparable was successfully inserted and
+     *         false if the comparable was already in the tree.
      */
     boolean insert (String filename);
 
     /**
-     * This method checks if the Integer is
+     * This method checks if the comparable is
      * contained in the tree.
      * @param o The value to be checked
      * @return Returns true if the value is contained in the tree and false if it isn't.
@@ -41,14 +41,14 @@ public interface BTree {
     int height();
 
     /**
-     * This method returns the largest Integer in the tree.
-     * @return The largest Integer.
+     * This method returns the largest comparable in the tree.
+     * @return The largest comparable.
      */
     Comparable getMax();
 
     /**
-     * This method returns the smallest Integer in the tree.
-     * @return The smallest Integer.
+     * This method returns the smallest comparable in the tree.
+     * @return The smallest comparable.
      */
     Comparable getMin();
 
@@ -101,6 +101,4 @@ public interface BTree {
      */
     int getOrder();
 
-
-    //Test
 }
