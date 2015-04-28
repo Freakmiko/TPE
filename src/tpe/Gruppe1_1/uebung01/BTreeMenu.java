@@ -50,6 +50,7 @@ public class BTreeMenu {
 
 
         int selection = readInt();
+        readLine();
 
         switch (selection) {
 
