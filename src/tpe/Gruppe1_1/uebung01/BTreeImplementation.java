@@ -477,8 +477,64 @@ public class BTreeImplementation implements BTree {
             rotateLeft(node, rightSibling, rightParentIndex, 0, order - 1);
         } else if (leftSibling != null && leftSibling.size() - 1 >= order) {
             rotateLeft(node, leftSibling, rightParentIndex - 1, leftSibling.size() - 1, 0);
+        } else {
+            if(leftSibling != null) {
+
+                Comparable seperator = node.getParent().getKeys()[rightParentIndex - 1];
+
+                leftSibling.insert(order, seperator);
+
+                for(int i = 0; i < node.size(); i++) {
+                    leftSibling.insert(order + 1 + i, node.getKeys()[i]);
+                }
+
+                node.getParent().getChildren()[rightParentIndex] = leftSibling;
+
+                node.getParent().remove(seperator);
+
+            } else if (rightSibling != null) {
+                Comparable seperator = node.getParent().getKeys()[rightParentIndex];
+                node.insert(order - 1, seperator);
+
+                for(int i = 0; i < rightSibling.size(); i++) {
+                    node.insert(order + i, rightSibling.getKeys()[i]);
+                }
+
+                node.getParent().getChildren()[rightParentIndex + 1] = node;
+                node.getParent().remove(seperator);
+            }
         }
     }
+
+    public static void main(String[] args) {
+        BTree tree = new BTreeImplementation(2);
+        tree.insert(5);
+        tree.insert(12);
+        tree.insert(94);
+        tree.insert(30);
+        tree.insert(23);
+        tree.insert(19);
+        tree.insert(2);
+        tree.insert(1);
+        tree.insert(8);
+        tree.insert(6);
+        tree.insert(15);
+        tree.insert(52);
+        tree.printInorder();
+        tree.remove(6);
+        println("Removing 6");
+        tree.printInorder();
+        tree.remove(30);
+        tree.remove(1);
+        tree.remove(2);
+        println("Removing 30, 1 , 2");
+        tree.printInorder();
+        tree.remove(8);
+        println("Removing 8");
+        tree.printInorder();
+
+    }
+
 
     private void rotateLeft(Node deficientNode, Node nodeWithEnoughElements, int parentIndex, int insertPosition1, int insertPosition2) {
         deficientNode.insert(insertPosition2, deficientNode.getParent().getKeys()[parentIndex]);

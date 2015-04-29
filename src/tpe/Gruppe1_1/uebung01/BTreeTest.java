@@ -17,7 +17,7 @@ public class BTreeTest {
 
 	private BTree stringTree = new BTreeImplementation(2);
 
-	@Before
+    @Before
 	public void beforeTest() throws Exception {
 		// Inserts the elements into "SmallTree".
 		smallTree.insert(2);
