@@ -440,15 +440,33 @@ public class BTreeImplementation implements BTree {
     }
 
     private boolean remove(Node node, int index, Comparable o) {
-        if(node.getChildren()[0] == null)
+        Node potentiallyDeficientNode;
+
+        if(node.getChildren()[0] == null) {
             node.remove(o);
+            potentiallyDeficientNode = node;
+        } else {
+            int removedIndex = 0;
+            for(int i = 0; i < node.size(); i++) {
+                if(node.getKeys()[i].compareTo(o) == 0)
+                    removedIndex = i;
+            }
 
-        if(node.size() < order)
-            if(node.getKeys()[0] != null)
-                rebalance(node);
+            Node maxNode = getMax(node.getChildren()[removedIndex]);
 
-        // TODO: Change
-        return false;
+            Comparable maxElement = maxNode.getKeys()[maxNode.size() - 1];
+
+            //node.remove(o);
+            node.getKeys()[removedIndex] = maxElement;
+            maxNode.remove(maxElement);
+            potentiallyDeficientNode = maxNode;
+        }
+
+        if(potentiallyDeficientNode.size() < order)
+            if(potentiallyDeficientNode.getKeys()[0] != null)
+                rebalance(potentiallyDeficientNode);
+
+        return true;
     }
 
     private void rebalance(Node node) {
@@ -480,6 +498,8 @@ public class BTreeImplementation implements BTree {
 
                 node.getParent().getChildren()[rightParentIndex] = leftSibling;
                 node.getParent().remove(seperator);
+                if(node.getParent() == root && node.getParent().getKeys()[0] == null)
+                    root = leftSibling;
 
             } else if (rightSibling != null) {
                 Comparable seperator = node.getParent().getKeys()[rightParentIndex];
@@ -490,6 +510,8 @@ public class BTreeImplementation implements BTree {
 
                 node.getParent().getChildren()[rightParentIndex + 1] = node;
                 node.getParent().remove(seperator);
+                if(node.getParent() == root && node.getParent().getKeys()[0] == null)
+                    root = node;
             }
         }
     }
