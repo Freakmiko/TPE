@@ -245,31 +245,20 @@ public class BTreeImplementation implements BTree {
 
     @Override
     public Comparable getMax() {
-        return getMax(root);
+        Node maxNode = getMax(root);
+
+        if(maxNode == null)
+            return -1;
+        else
+            return maxNode.getKeys()[maxNode.size() - 1];
+
     }
 
-    private Comparable getMax(Node node) {
-        Comparable currMax = 0;
-        int currMaxIndex = 0;
-
-        // We loop through each element in a node
-        // and mark the maximum of the node
-        for(int i = 0; i < order * 2; i++) {
-            if(node.getKeys()[0] == null)
-                return -1;
-
-            if(node.getKeys()[i] != null) {
-                currMax = node.getKeys()[i];
-                currMaxIndex = i;
-            }
-        }
-
-        // If our current maximum element has a right child
-        // it's not our actual maximum so we recursively call getMax with the child
-        if(node.getChildren()[currMaxIndex + 1] != null)
-            return getMax(node.getChildren()[currMaxIndex + 1]);
+    private Node getMax(Node node) {
+        if(node.getChildren()[node.size()] != null)
+            return getMax(node.getChildren()[node.size()]);
         else
-            return currMax;
+            return node.getKeys()[0] == null ? null : node;
     }
 
     @Override
