@@ -251,7 +251,6 @@ public class BTreeImplementation implements BTree {
             return -1;
         else
             return maxNode.getKeys()[maxNode.size() - 1];
-
     }
 
     private Node getMax(Node node) {
@@ -263,14 +262,19 @@ public class BTreeImplementation implements BTree {
 
     @Override
     public Comparable getMin() {
-        return getMin(root);
+        Node minNode = getMin(root);
+
+        if(minNode == null)
+            return -1;
+        else
+            return minNode.getKeys()[0];
     }
 
-    private Comparable getMin(Node node) {
-        // For the smalles element we only need to look through
+    private Node getMin(Node node) {
+        // For the smallest element we only need to look through
         // the left children of our nodes and the leftmost element in a node
         if(node.getChildren()[0] == null)
-            return node.getKeys()[0] == null ? -1 : node.getKeys()[0];
+            return node.getKeys()[0] == null ? null : node;
         else
             return getMin(node.getChildren()[0]);
     }
