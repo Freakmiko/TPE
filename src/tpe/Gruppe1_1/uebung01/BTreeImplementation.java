@@ -4,6 +4,7 @@ import tpe.Gruppe1_1.uebung02.Car;
 import tpe.Gruppe1_1.utils.QueueImpl;
 import tpe.Gruppe1_1.utils.Queue;
 
+
 import static gdi.MakeItSimple.*;
 
 public class BTreeImplementation implements BTree {
@@ -43,7 +44,7 @@ public class BTreeImplementation implements BTree {
         if (root.getKeys()[0] == null)
             return insert(root, 0, o);
 
-        return root.getKeys()[0].getClass() == o.getClass() && insert(root, 0, o);
+        return root.getKeys()[0].getClass().getSuperclass() == o.getClass().getSuperclass() && insert(root, 0, o);
     }
 
     private boolean insert(Node node,int keyIndex, Comparable o) {

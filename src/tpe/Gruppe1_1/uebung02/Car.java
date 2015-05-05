@@ -28,6 +28,6 @@ public abstract class Car implements Comparable {
 
     @Override
     public String toString() {
-        return brand + ": " + constructionYear + ", " + price;
+        return "[" + id + "] " + brand + ": " + constructionYear + ", " + price;
     }
 }
