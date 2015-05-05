@@ -1,5 +1,6 @@
 package tpe.Gruppe1_1.uebung01;
 
+import tpe.Gruppe1_1.uebung02.Car;
 import tpe.Gruppe1_1.utils.QueueImpl;
 import tpe.Gruppe1_1.utils.Queue;
 
@@ -14,7 +15,7 @@ public class BTreeImplementation implements BTree {
      * Creates the BTree with the given order
      * @param order the order of the tree (can't be <= 0)
      */
-    BTreeImplementation(int order) {
+    public BTreeImplementation(int order) {
         if(order <= 0)
             order = 1;
 
@@ -392,7 +393,6 @@ public class BTreeImplementation implements BTree {
         println(output);
 
     }
-
 
     public String getElements() {
         String output = "";
