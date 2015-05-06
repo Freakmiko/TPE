@@ -34,7 +34,6 @@ public class CarBTreeMenu {
 
         println("------------------- Menu ------------------");
         println("01) insert car");
-        println("02) insert(String filename)");
         println("03) contains(Integer object)");
         println("04) size()");
         println("05) height()");
