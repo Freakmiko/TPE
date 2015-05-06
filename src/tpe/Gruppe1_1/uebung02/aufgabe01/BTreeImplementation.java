@@ -464,7 +464,6 @@ public class BTreeImplementation implements BTree {
         }
 
         if(potentiallyDeficientNode.size() < order)
-            if(potentiallyDeficientNode.getKeys()[0] != null)
                 rebalance(potentiallyDeficientNode);
 
         return true;
