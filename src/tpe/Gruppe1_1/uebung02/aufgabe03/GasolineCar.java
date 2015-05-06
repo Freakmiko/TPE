@@ -9,6 +9,10 @@ public class GasolineCar extends Car implements Gasoline {
         this.emissionTier = emissionTier;
     }
 
+    GasolineCar(int id) {
+        super(id);
+    }
+
     @Override
     public int getEmissionTier() {
         return emissionTier;

@@ -27,28 +27,23 @@ public class CarBTreeMenu {
     }
 
     public static boolean makeMenu() {
-
-        Integer tempValue;
-        String filename;
         int workingTreeNumber;
 
         println("------------------- Menu ------------------");
         println("01) insert car");
-        println("03) contains(Integer object)");
-        println("04) size()");
-        println("05) height()");
-        println("06) getMax()");
-        println("07) getMin()");
-        println("08) isEmpty()");
-        println("09) addAll(BTree otherTree)");
-        println("10) cloneDeep(BTree otherTree)");
-        println("11) printInorder()");
-        println("12) printPostorder()");
-        println("13) printPreorder()");
-        println("14) printLevelorder()");
-        println("15) All Printmethods");
-        println("16) change workingTree");
-        println("17) Exit");
+        println("02) size()");
+        println("03) height()");
+        println("04) getMax()");
+        println("05) getMin()");
+        println("06) isEmpty()");
+        println("07) remove()");
+        println("08) printInorder()");
+        println("09) printPostorder()");
+        println("10) printPreorder()");
+        println("11) printLevelorder()");
+        println("12) All Printmethods");
+        println("13) change workingTree");
+        println("14) Exit");
 
 
         int selection = readInt();
@@ -74,96 +69,107 @@ public class CarBTreeMenu {
                         int emisionTier = readInt();
                         GasolineCar car = new GasolineCar(brand, constructionYear, price, emisionTier);
                         bTreeArray[workingTree].insert(car);
+                        break;
+                    case 2:
+                        println("Is it a High voltage car? y\\N");
+                        boolean highVoltage;
+                        switch(readChar()) {
+                            case 'y' | 'Y':
+                                highVoltage = true;
+                                break;
+                            case 'n' | 'N':
+                                highVoltage = false;
+                                break;
+                            default:
+                                highVoltage = false;
+                        }
+                        ElectricCar eCar = new ElectricCar(brand, constructionYear, price, highVoltage);
+                        bTreeArray[workingTree].insert(eCar);
+                        break;
+                    case 3:
+                        println("Please enter the emission tier:");
+                        int hybridEmissionTier = readInt();
+                        println("Is it a High voltage car? y\\N");
+                        boolean hybridHighVoltage;
+                        switch(readChar()) {
+                            case 'y' | 'Y':
+                                hybridHighVoltage = true;
+                                break;
+                            case 'n' | 'N':
+                                hybridHighVoltage = false;
+                                break;
+                            default:
+                                hybridHighVoltage = false;
+                        }
+                        HybridCar hCar = new HybridCar(brand, constructionYear, price, hybridHighVoltage, hybridEmissionTier);
+                        bTreeArray[workingTree].insert(hCar);
+                        break;
+                    default:
+                        println("Invalid Input");
                 }
                 break;
-
-            // insert(String filename)
-            case 2:
-                println("Please enter the path to the file:");
-                filename = readLine();
-                if (bTreeArray[workingTree].insert(filename))
-                    println("Every element in the file has been inserted into the tree.");
-                else
-                    println("Only some elements have been inserted into the tree because there was a duplicate.");
-                break;
-
-            // contains(Integer object)
-            case 3:
-                println("Please enter the value that you want to look for:");
-                tempValue = readInt();
-                if (bTreeArray[workingTree].contains(tempValue))
-                    println("The value is in the tree.");
-                else
-                    println("The value is not in the tree.");
-                break;
-
             // size()
-            case 4:
+            case 2:
                 println("The size of the tree is " + bTreeArray[workingTree].size() + ".");
                 break;
 
             // height
-            case 5:
+            case 3:
                 println("The height of the tree is " + bTreeArray[workingTree].height() + ".");
                 break;
 
             // getMax()
-            case 6:
+            case 4:
                 println("The maximum of the tree is " + bTreeArray[workingTree].getMax() + ".");
                 break;
 
             // getMin()
-            case 7:
+            case 5:
                 println("The minimum of the tree is " + bTreeArray[workingTree].getMin() + ".");
                 break;
 
             // isEmpty()
-            case 8:
+            case 6:
                 if (bTreeArray[workingTree].isEmpty())
                     println("The tree is empty.");
                 else
                     println("The tree is not empty.");
                 break;
 
-            // addAll(BTree otherTree)
-            case 9:
-                println("Please enter the number of the tree from which you want all values to be inserted\ninto the current tree:");
-                bTreeArray[workingTree].addAll(bTreeArray[readInt()]);
-                println("All values have been inserted.");
-                break;
-
-            // cloneDeep(BTree otherTree)
-            case 10:
-                println("Please enter the number of the tree that you want to be cloned deep over the current tree: ");
-                bTreeArray[workingTree] = BTreeImplementation.cloneDeep(bTreeArray[readInt()]);
-                println("The tree has been cloned.");
-                break;
+            // remove()
+            case 7:
+                bTreeArray[workingTree].printInorder();
+                println("Please enter the id of the car to remove");
+                int id = readInt();
+                GasolineCar gCar = new GasolineCar(id);
+                bTreeArray[workingTree].remove(gCar);
+                bTreeArray[workingTree].printInorder();
 
             // printInorder()
-            case 11:
+            case 8:
                 println();
                 bTreeArray[workingTree].printInorder();
                 break;
 
             // printPostorder()
-            case 12:
+            case 9:
                 println();
                 bTreeArray[workingTree].printPostorder();
                 break;
 
             // printPreorder()
-            case 13:
+            case 10:
                 println();
                 bTreeArray[workingTree].printPreorder();
                 break;
 
             // printLevelorder
-            case 14:
+            case 11:
                 println();
                 bTreeArray[workingTree].printLevelorder();
                 break;
 
-            case 15:
+            case 12:
                 println("Inorder:");
                 println();
                 bTreeArray[workingTree].printInorder();
@@ -179,7 +185,7 @@ public class CarBTreeMenu {
                 break;
 
             // change workingTree
-            case 16:
+            case 13:
                 println("Please enter the number of the tree you want to switch to:");
                 workingTreeNumber = readInt();
                 if (workingTreeNumber < 0 || workingTreeNumber > 9) {
@@ -188,7 +194,7 @@ public class CarBTreeMenu {
                     workingTree = workingTreeNumber;
                 }
                 break;
-            case 17:
+            case 14:
                 return false;
 
             default:

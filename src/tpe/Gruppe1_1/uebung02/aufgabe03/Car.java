@@ -10,11 +10,15 @@ public abstract class Car implements Comparable {
     private int price;
 
 
-    Car(String brand, int constructionYear, int price) {
+    public Car(String brand, int constructionYear, int price) {
         this.brand = brand;
         this.constructionYear = constructionYear;
         this.price = price;
         this.id = carIDCounter++;
+    }
+
+    Car(int id) {
+        this.id = id;
     }
 
     @Override
