@@ -1,8 +1,9 @@
-package tpe.Gruppe1_1.uebung01;
+package tpe.Gruppe1_1.uebung02.aufgabe01;
 
-import tpe.Gruppe1_1.utils.QueueImpl;
 import tpe.Gruppe1_1.utils.Queue;
-
+import tpe.Gruppe1_1.utils.QueueImpl;
+import tpe.Gruppe1_1.uebung01.Node;
+import tpe.Gruppe1_1.uebung01.BTree;
 
 import static gdi.MakeItSimple.*;
 

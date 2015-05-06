@@ -6,11 +6,11 @@ public class Node {
     private Node[] children;
     private Comparable[] keys;
 
-    Node(int order) {
+    public Node(int order) {
         this(order, null);
     }
 
-    Node(int order, Node parent) {
+    public Node(int order, Node parent) {
         this.setKeys(new Comparable[order * 2 + 1]);
         this.setChildren(new Node[order * 2 + 2]);
         this.setParent(parent);
@@ -23,7 +23,7 @@ public class Node {
      * @param o The integer to be inserted
      * @return returns true if the node has more elements than it can hold and false if everything's fine
      */
-    boolean insert(int index, Comparable o) {
+    public boolean insert(int index, Comparable o) {
         if(index < 0 || index >= getKeys().length)
             return false;
 
@@ -48,7 +48,7 @@ public class Node {
      * Removes the Integer from the Node.
      * @param o The integer to remove.
      */
-    void remove(Comparable o) {
+    public void remove(Comparable o) {
         int nodeToRemove = -1;
 
         for(int i = 0; i < getKeys().length; i++) {
@@ -70,7 +70,7 @@ public class Node {
      * Counts the elements in the node
      * @return the number of elements
      */
-    int size() {
+    public int size() {
         int count = 0;
         for (int i = 0; i < getKeys().length; i++) {
             count += getKeys()[i] == null ? 0 : 1;

@@ -1,11 +1,9 @@
-package tpe.Gruppe1_1.uebung02;
+package tpe.Gruppe1_1.uebung02.aufgabe03;
 
 import org.junit.Before;
 import org.junit.Test;
 import tpe.Gruppe1_1.uebung01.BTree;
 import tpe.Gruppe1_1.uebung01.BTreeImplementation;
-
-import static org.junit.Assert.*;
 
 public class CarTest {
 
