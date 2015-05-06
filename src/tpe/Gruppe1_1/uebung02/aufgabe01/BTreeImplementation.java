@@ -195,7 +195,7 @@ public class BTreeImplementation implements BTree {
     public boolean contains(Comparable o) {
         if(root.getKeys()[0] == null)
             return false;
-        else if(root.getKeys()[0].getClass() != o.getClass())
+        else if(root.getKeys()[0].getClass().getSuperclass() != o.getClass().getSuperclass())
             return false;
         return contains(root, 0, o);
     }
