@@ -70,7 +70,7 @@ public class CarTest {
         Car a = new GasolineCar("BMW", 2012, 25000, 2);
         Car b = new GasolineCar("Audi", 2011, 22000, 3);
 
-        assertEquals(true, (a.compareTo(b)) > 0);
+        assertEquals(true, (a.compareTo(b)) < 0);
     }
 
     @Test
@@ -126,7 +126,7 @@ public class CarTest {
         Car a = new HybridCar("VW", 2014, 30000, false, 1);
         Car b = new HybridCar("Opel", 2015, 45000, true, 1);
 
-        assertEquals(true, (a.compareTo(b)) > 0);
+        assertEquals(true, (a.compareTo(b)) < 0);
     }
 
     @Test
@@ -231,7 +231,7 @@ public class CarTest {
         tree.insert(c);
         tree.insert(d);
 
-        assertEquals(b, tree.getMin());
+        assertEquals(a, tree.getMin());
     }
 
     @Test

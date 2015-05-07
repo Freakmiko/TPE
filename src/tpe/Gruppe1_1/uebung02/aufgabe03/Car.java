@@ -23,15 +23,15 @@ public abstract class Car implements Comparable {
 
     @Override
     public int compareTo(Object o) {
-//        if(id == ((Car)o).id)
-//            return 0;
-//        else if (id > ((Car)o).id)
-//            return 1;
-//        return -1;
         if(id == ((Car)o).id)
             return 0;
-        else
-            return (""+brand+constructionYear+price+id).compareTo(""+((Car)o).brand+((Car)o).constructionYear+((Car)o).price+((Car)o).id);
+        else if (id > ((Car)o).id)
+            return 1;
+        return -1;
+//        if(id == ((Car)o).id)
+//            return 0;
+//        else
+//            return (""+brand+constructionYear+price+id).compareTo(""+((Car)o).brand+((Car)o).constructionYear+((Car)o).price+((Car)o).id);
     }
 
     public int getId() {
