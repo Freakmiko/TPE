@@ -11,6 +11,50 @@ public class CarTest {
 
     BTree tree = new BTreeImplementation(1);
 
+    @Test
+    public void remove() throws Exception {
+        BTree tree = new BTreeImplementation(1);
+
+        Car a = new GasolineCar("A", 2012, 25000, 2);
+        Car b = new GasolineCar("B", 2012, 25000, 2);
+        Car c = new GasolineCar("C", 2012, 25000, 2);
+        Car d = new GasolineCar("D", 2012, 25000, 2);
+        Car e = new GasolineCar("E", 2012, 25000, 2);
+        Car f = new GasolineCar("F", 2012, 25000, 2);
+        Car g = new GasolineCar("G", 2012, 25000, 2);
+        Car h = new GasolineCar("H", 2012, 25000, 2);
+        Car i = new GasolineCar("i", 2012, 25000, 2);
+        Car j = new GasolineCar("j", 2012, 25000, 2);
+
+        tree.insert(a);
+        tree.insert(b);
+        tree.insert(c);
+        tree.insert(d);
+        tree.insert(e);
+        tree.insert(f);
+        tree.insert(g);
+        tree.insert(h);
+        tree.insert(i);
+        tree.insert(j);
+
+        tree.printInorder();
+
+        tree.remove(i);
+        tree.printInorder();
+        tree.remove(j);
+        tree.printInorder();
+        tree.remove(h);
+        tree.printInorder();
+        tree.remove(g);
+        tree.printInorder();
+        tree.remove(f);
+
+        tree.printInorder();
+        tree.printLevelorder();
+
+    }
+
+
     @Before
     public void setup() {
         Car a = new GasolineCar("BMW", 2012, 25000, 2);

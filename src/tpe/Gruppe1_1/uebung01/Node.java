@@ -63,6 +63,8 @@ public class Node {
         for(int i = nodeToRemove; i < getKeys().length - 1; i++) {
             getKeys()[i] = getKeys()[i + 1];
             getChildren()[i] = getChildren()[i + 1];
+            getKeys()[i+1] = null;
+            getChildren()[i+1] = null;
         }
     }
 

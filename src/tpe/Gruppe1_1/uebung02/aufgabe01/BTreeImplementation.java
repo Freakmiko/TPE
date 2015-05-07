@@ -1,5 +1,6 @@
 package tpe.Gruppe1_1.uebung02.aufgabe01;
 
+import tpe.Gruppe1_1.uebung02.aufgabe03.Car;
 import tpe.Gruppe1_1.utils.Queue;
 import tpe.Gruppe1_1.utils.QueueImpl;
 import tpe.Gruppe1_1.uebung01.Node;
@@ -209,6 +210,8 @@ public class BTreeImplementation implements BTree {
 
         if(node.getKeys()[keyIndex].compareTo(o)>= 1)
             return node.getChildren()[keyIndex] != null && contains(node.getChildren()[keyIndex], 0, o);
+//        else if (node.getKeys()[keyIndex].compareTo(o) <= -1 && node.getChildren()[keyIndex] != null)
+//            return  contains(node.getChildren()[keyIndex], 0, o);
         else
             return contains(node, keyIndex + 1, o);
     }
@@ -441,43 +444,35 @@ public class BTreeImplementation implements BTree {
     }
 
     private boolean remove(Node node, int index, Comparable o) {
-        Node potentiallyDeficientNode;
-
         if(node.getChildren()[0] == null) {
             node.remove(o);
-            potentiallyDeficientNode = node;
+            if(node.size() < order)
+                rebalance(node);
         } else {
-            int removedIndex = 0;
-            for(int i = 0; i < node.size(); i++) {
+            int seperatorIndex = 0;
+            for(int i = 0; i < node.size(); i++)
                 if(node.getKeys()[i].compareTo(o) == 0)
-                    removedIndex = i;
-            }
+                    seperatorIndex = i;
 
-            Node maxNode = getMax(node.getChildren()[removedIndex]);
+            Node maxNode = getMax(node.getChildren()[seperatorIndex]);
+            node.getKeys()[seperatorIndex] = maxNode.getKeys()[maxNode.size() - 1];
+            maxNode.remove(maxNode.getKeys()[maxNode.size() - 1]);
 
-            Comparable maxElement = maxNode.getKeys()[maxNode.size() - 1];
-
-            //node.remove(o);
-            node.getKeys()[removedIndex] = maxElement;
-            maxNode.remove(maxElement);
-            potentiallyDeficientNode = maxNode;
+            if(maxNode.size() < order)
+                rebalance(maxNode);
         }
-
-        if(potentiallyDeficientNode.size() < order)
-                rebalance(potentiallyDeficientNode);
-
         return true;
     }
 
     private void rebalance(Node node) {
         int rightParentIndex = 0;
+        Node rightSibling = null, leftSibling = null;
 
         for(int i = 0; i < node.getParent().size() + 1; i++) {
-            if(node.getParent().getChildren()[i] == node)
+            if(node.getParent().getChildren()[i] == node ) {
                 rightParentIndex = i;
+            }
         }
-
-        Node rightSibling = null, leftSibling = null;
 
         if(rightParentIndex < order + 1)
             rightSibling = node.getParent().getChildren()[rightParentIndex + 1];
@@ -498,8 +493,16 @@ public class BTreeImplementation implements BTree {
 
                 node.getParent().getChildren()[rightParentIndex] = leftSibling;
                 node.getParent().remove(seperator);
-                if(node.getParent() == root && node.getParent().getKeys()[0] == null)
+
+
+
+                if(node.getParent() == root && node.getParent().getKeys()[0] == null) {
+                    if(node.getChildren()[0] != null)
+                        leftSibling.getChildren()[leftSibling.size()] = node.getChildren()[0];
                     root = leftSibling;
+                } else if (node.getParent().size() < order) {
+                    rebalance(node.getParent());
+                }
 
             } else if (rightSibling != null) {
                 Comparable seperator = node.getParent().getKeys()[rightParentIndex];
@@ -510,11 +513,19 @@ public class BTreeImplementation implements BTree {
 
                 node.getParent().getChildren()[rightParentIndex + 1] = node;
                 node.getParent().remove(seperator);
-                if(node.getParent() == root && node.getParent().getKeys()[0] == null)
+                if(node.getParent() == root && node.getParent().getKeys()[0] == null) {
+                    if (rightSibling.getChildren()[0] != null) {
+                        node.getChildren()[node.size()] = rightSibling.getChildren()[0];
+                    }
                     root = node;
+                } else if (node.getParent().size() < order) {
+                    rebalance(node.getParent());
+                }
+
             }
         }
     }
+
 
     private void rotate(Node deficientNode, Node nodeWithEnoughElements, int parentIndex, int keyIndexToTakeOut, int insertPosInDeficentNode) {
         deficientNode.insert(insertPosInDeficentNode, deficientNode.getParent().getKeys()[parentIndex]);

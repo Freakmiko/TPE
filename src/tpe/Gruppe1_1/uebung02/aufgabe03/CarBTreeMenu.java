@@ -8,7 +8,7 @@ import static gdi.MakeItSimple.*;
 public class CarBTreeMenu {
 
     // Array with 9 BTrees
-    static BTree bTreeArray[] = new BTree[9];
+    static BTreeImplementation bTreeArray[] = new BTreeImplementation[9];
 
     static int workingTree = 0;
 
@@ -73,6 +73,7 @@ public class CarBTreeMenu {
                     case 2:
                         println("Is it a High voltage car? y\\N");
                         boolean highVoltage;
+                        readLine();
                         switch(readChar()) {
                             case 'y' | 'Y':
                                 highVoltage = true;
@@ -91,6 +92,7 @@ public class CarBTreeMenu {
                         int hybridEmissionTier = readInt();
                         println("Is it a High voltage car? y\\N");
                         boolean hybridHighVoltage;
+                        readLine();
                         switch(readChar()) {
                             case 'y' | 'Y':
                                 hybridHighVoltage = true;
