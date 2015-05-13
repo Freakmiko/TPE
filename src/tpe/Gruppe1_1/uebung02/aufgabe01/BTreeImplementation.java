@@ -1,8 +1,10 @@
-package tpe.Gruppe1_1.uebung01;
+package tpe.Gruppe1_1.uebung02.aufgabe01;
 
-import tpe.Gruppe1_1.utils.QueueImpl;
+import tpe.Gruppe1_1.uebung02.aufgabe03.Car;
 import tpe.Gruppe1_1.utils.Queue;
-
+import tpe.Gruppe1_1.utils.QueueImpl;
+import tpe.Gruppe1_1.uebung01.Node;
+import tpe.Gruppe1_1.uebung01.BTree;
 
 import static gdi.MakeItSimple.*;
 
@@ -194,7 +196,7 @@ public class BTreeImplementation implements BTree {
     public boolean contains(Comparable o) {
         if(root.getKeys()[0] == null)
             return false;
-        else if(root.getKeys()[0].getClass() != o.getClass())
+        else if(root.getKeys()[0].getClass().getSuperclass() != o.getClass().getSuperclass())
             return false;
         return contains(root, 0, o);
     }
@@ -208,6 +210,8 @@ public class BTreeImplementation implements BTree {
 
         if(node.getKeys()[keyIndex].compareTo(o)>= 1)
             return node.getChildren()[keyIndex] != null && contains(node.getChildren()[keyIndex], 0, o);
+//        else if (node.getKeys()[keyIndex].compareTo(o) <= -1 && node.getChildren()[keyIndex] != null)
+//            return  contains(node.getChildren()[keyIndex], 0, o);
         else
             return contains(node, keyIndex + 1, o);
     }
@@ -436,72 +440,99 @@ public class BTreeImplementation implements BTree {
 
     @Override
     public boolean remove(Comparable o) {
+        // First we want to know if the object is in the tree (with contains(o))
+        // then we find the node that contains that object and remove the object
         return contains(o) && remove(findObject(root, o), 0, o);
     }
 
     private boolean remove(Node node, int index, Comparable o) {
-        Node potentiallyDeficientNode;
-
+        // if our node is a leaf we can just remove the object
+        // from the node and rebalance it if needed
         if(node.getChildren()[0] == null) {
             node.remove(o);
-            potentiallyDeficientNode = node;
+            if(node.size() < order)
+                rebalance(node);
         } else {
-            int removedIndex = 0;
-            for(int i = 0; i < node.size(); i++) {
+            // in this case our node is not a leaf
+
+            int seperatorIndex = 0;
+            // first we find the index of our object that we want to remove
+            for(int i = 0; i < node.size(); i++)
                 if(node.getKeys()[i].compareTo(o) == 0)
-                    removedIndex = i;
-            }
+                    seperatorIndex = i;
 
-            Node maxNode = getMax(node.getChildren()[removedIndex]);
+            // then we get the biggest element from the left subtree of our object
+            Node maxNode = getMax(node.getChildren()[seperatorIndex]);
+            // we replace our element with the biggest element from the left subtree
+            node.getKeys()[seperatorIndex] = maxNode.getKeys()[maxNode.size() - 1];
+            // and then we remove that element from the subtree
+            maxNode.remove(maxNode.getKeys()[maxNode.size() - 1]);
 
-            Comparable maxElement = maxNode.getKeys()[maxNode.size() - 1];
-
-            //node.remove(o);
-            node.getKeys()[removedIndex] = maxElement;
-            maxNode.remove(maxElement);
-            potentiallyDeficientNode = maxNode;
+            // in case our maxNode is now deficient we need to rebalance it
+            if(maxNode.size() < order)
+                rebalance(maxNode);
         }
-
-        if(potentiallyDeficientNode.size() < order)
-            if(potentiallyDeficientNode.getKeys()[0] != null)
-                rebalance(potentiallyDeficientNode);
-
         return true;
     }
 
     private void rebalance(Node node) {
         int rightParentIndex = 0;
-
-        for(int i = 0; i < node.getParent().size() + 1; i++) {
-            if(node.getParent().getChildren()[i] == node)
-                rightParentIndex = i;
-        }
-
         Node rightSibling = null, leftSibling = null;
 
+        // first we get the index of the parent element (right from our node)
+        for(int i = 0; i < node.getParent().size() + 1; i++) {
+            if(node.getParent().getChildren()[i] == node ) {
+                rightParentIndex = i;
+            }
+        }
+
+        // here we get the siblings
         if(rightParentIndex < order + 1)
             rightSibling = node.getParent().getChildren()[rightParentIndex + 1];
         if(rightParentIndex > 0)
             leftSibling = node.getParent().getChildren()[rightParentIndex - 1];
 
+        // should our node have a right sibling that we can remove one element from
+        // we rotate the tree
         if(rightSibling != null && rightSibling.size() - 1 >= order) {
             rotate(node, rightSibling, rightParentIndex, 0, order - 1);
-        } else if (leftSibling != null && leftSibling.size() - 1 >= order) {
+        }
+        // same with our left sibling
+        else if (leftSibling != null && leftSibling.size() - 1 >= order) {
             rotate(node, leftSibling, rightParentIndex - 1, leftSibling.size() - 1, 0);
         } else {
+            // if we're not able to remove one element from one of the siblings
+            // we have to merge with one of them
             if(leftSibling != null) {
+                // we get the seperator and insert it into the left sibling
                 Comparable seperator = node.getParent().getKeys()[rightParentIndex - 1];
                 leftSibling.insert(order, seperator);
 
+                // then we fill that left sibling with all the elements
+                // that are still in our deficient node
                 for(int i = 0; i < node.size(); i++)
                     leftSibling.insert(order + 1 + i, node.getKeys()[i]);
 
+                // here we set the right child of our seperator
+                // to the left child because after removing one element from
+                // the node, all the children get shifted to the left, thus losing one element
                 node.getParent().getChildren()[rightParentIndex] = leftSibling;
                 node.getParent().remove(seperator);
-                if(node.getParent() == root && node.getParent().getKeys()[0] == null)
+
+
+                // should our parent be the root and not have any elements, our new root
+                // is now  the left sibling
+                if(node.getParent() == root && node.getParent().getKeys()[0] == null) {
+                    if(node.getChildren()[0] != null)
+                        leftSibling.getChildren()[leftSibling.size()] = node.getChildren()[0];
                     root = leftSibling;
+                    leftSibling.setParent(null);
+                } else if (node.getParent().size() < order) {
+                    rebalance(node.getParent());
+                }
 
             } else if (rightSibling != null) {
+                // here we do the same as with the left sibling
                 Comparable seperator = node.getParent().getKeys()[rightParentIndex];
                 node.insert(order - 1, seperator);
 
@@ -510,11 +541,20 @@ public class BTreeImplementation implements BTree {
 
                 node.getParent().getChildren()[rightParentIndex + 1] = node;
                 node.getParent().remove(seperator);
-                if(node.getParent() == root && node.getParent().getKeys()[0] == null)
+                if(node.getParent() == root && node.getParent().getKeys()[0] == null) {
+                    if (rightSibling.getChildren()[0] != null) {
+                        node.getChildren()[node.size()] = rightSibling.getChildren()[0];
+                    }
                     root = node;
+                    node.setParent(null);
+                } else if (node.getParent().size() < order) {
+                    rebalance(node.getParent());
+                }
+
             }
         }
     }
+
 
     private void rotate(Node deficientNode, Node nodeWithEnoughElements, int parentIndex, int keyIndexToTakeOut, int insertPosInDeficentNode) {
         deficientNode.insert(insertPosInDeficentNode, deficientNode.getParent().getKeys()[parentIndex]);
