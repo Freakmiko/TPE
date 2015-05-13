@@ -18,11 +18,7 @@ public class FlightRouteTest {
 
     @Test
     public void testNormalFlightLength() throws Exception {
-        try {
-            FlightRoute fR = new FlightRoute("Mannheim", 4, 120);
-        } catch(Exception e) {
-            assertTrue(false);
-        }
+        FlightRoute fR = new FlightRoute("Mannheim", 4, 120);
     }
 
     @Test(expected = SimulatorConfigurationException.class)
@@ -31,17 +27,18 @@ public class FlightRouteTest {
     }
 
     @Test(expected = SimulatorConfigurationException.class)
+    public void testToLowNegativeHeight() throws Exception {
+        FlightRoute fR = new FlightRoute("Mannheim", 3, -1);
+    }
+
+    @Test(expected = SimulatorConfigurationException.class)
     public void testToLowMinimumHeight() throws Exception {
-        FlightRoute fR = new FlightRoute("Mannheim", 3, 49);
+        FlightRoute fR = new FlightRoute("Mannheim", 3, 0);
     }
 
     @Test
     public void testMaximumMinimumHeight() throws Exception {
-        try {
-            FlightRoute fR = new FlightRoute("Mannheim", 3, 200);
-        } catch (Exception e) {
-            assertTrue(false);
-        }
+        FlightRoute fR = new FlightRoute("Mannheim", 3, 200);
     }
 
 }

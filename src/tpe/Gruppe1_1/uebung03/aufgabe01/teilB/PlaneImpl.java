@@ -2,11 +2,11 @@ package tpe.Gruppe1_1.uebung03.aufgabe01.teilB;
 
 public class PlaneImpl implements Plane {
 
-    private int currentHeight;
-    private FlightRoute flightRoute;
-    private boolean doorsOpen;
-    private boolean isMoving;
-    private int distanceTraveled;
+    int currentHeight;
+    FlightRoute flightRoute;
+    boolean doorsOpen;
+    boolean isMoving;
+    int distanceTraveled;
 
     PlaneImpl(FlightRoute flightRoute) {
         if(flightRoute == null)
@@ -95,7 +95,9 @@ public class PlaneImpl implements Plane {
 
     @Override
     public String toString() {
-        return "Height: " + currentHeight + " meters - Distance Traveled: "
+        return "Height: " + currentHeight + " meters"
+                + " - Minimum Height: " + flightRoute.getMinimumHeight() + "\n"
+                + "Distance Traveled: "
                 + distanceTraveled + " kilometers" + " - Distance to fly: "
                 + (flightRoute.getLength() - distanceTraveled) + " kilometers" +"\n"
                 + "Doors: " + (doorsOpen ? "Open" : "Closed")

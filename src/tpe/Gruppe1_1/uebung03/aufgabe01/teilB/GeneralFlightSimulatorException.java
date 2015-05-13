@@ -5,6 +5,7 @@ public class GeneralFlightSimulatorException extends Exception {
     private String message;
 
     public GeneralFlightSimulatorException(String message) {
+        super(message);
         this.message = message;
     }
 

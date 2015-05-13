@@ -5,6 +5,7 @@ public class SimulatorConfigurationException extends Exception {
     private String message;
 
     SimulatorConfigurationException(String message) {
+        super(message);
         this.message = message;
     }
 
