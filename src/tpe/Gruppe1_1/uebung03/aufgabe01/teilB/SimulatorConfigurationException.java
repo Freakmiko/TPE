@@ -2,7 +2,7 @@ package tpe.Gruppe1_1.uebung03.aufgabe01.teilB;
 
 public class SimulatorConfigurationException extends Exception {
 
-    String message;
+    private String message;
 
     SimulatorConfigurationException(String message) {
         this.message = message;
