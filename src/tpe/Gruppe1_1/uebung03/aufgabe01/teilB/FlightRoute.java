@@ -11,15 +11,16 @@ public class FlightRoute {
      * @param length the length of the FlightRoute in kilometers.
      * @param minimumHeight the minimum height of the FlightRoute in meters.
      * @throws SimulatorConfigurationException
-     *          If the length is smaller than 0 or the minimumHeight is higher than 200.
+     *          If the length is smaller than 0 kilometers or the minimumHeight is
+     *          higher than 200 meters or lower than 50 meters.
      */
     FlightRoute(int length, int minimumHeight) throws SimulatorConfigurationException {
         if (length <= 0)
             throw new SimulatorConfigurationException("The length of the FlightRoute" +
                     " can't be smaller than 1 (" + length + ")");
-        if (minimumHeight >= 200)
+        if (minimumHeight > 200 || minimumHeight < 50)
             throw new SimulatorConfigurationException("The minimum height can't be higher" +
-                    " than 200 meters (" + minimumHeight + ")");
+                    " than 200 meters or lower than 50 meters (" + minimumHeight + ")");
 
         this.length = length;
         this.minimumHeight = minimumHeight;
