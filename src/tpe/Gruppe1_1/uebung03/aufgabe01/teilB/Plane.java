@@ -2,9 +2,12 @@ package tpe.Gruppe1_1.uebung03.aufgabe01.teilB;
 
 public interface Plane {
 
+    int MAXIMUM_FLIGHT_HEIGHT = 400;
+
     /**
      * Opens the doors of the airplane
      * To be able to open the doors the airplane must stop on ground.
+     *
      * @throws GeneralFlightSimulatorException
      *          If airplane is in the air or doesn't stop on ground.
      */
@@ -17,6 +20,7 @@ public interface Plane {
 
     /**
      * Stops the airplane when it moves on the ground.
+     *
      * @throws GeneralFlightSimulatorException
      *          If the airplane is in the air
      */
@@ -25,6 +29,7 @@ public interface Plane {
     /**
      * Lets the airplane go on one more kilometer, the altitude
      * difference is passed as a parameter.
+     *
      * @param additionalHeight
      *          The altitude difference the airplane is ascending/descending for the next
      *          kilometer.
@@ -33,5 +38,7 @@ public interface Plane {
      *          If problems occur while flying.
      */
     void flyNextKilometer(int additionalHeight) throws GeneralFlightSimulatorException;
+
+
 
 }

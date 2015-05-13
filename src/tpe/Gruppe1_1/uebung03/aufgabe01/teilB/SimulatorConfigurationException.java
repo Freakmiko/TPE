@@ -9,7 +9,7 @@ public class SimulatorConfigurationException extends Exception {
     }
 
     public void printInfo() {
-        System.out.println(message);
-        printStackTrace(System.out);
+        System.err.println(message);
+        printStackTrace(System.err);
     }
 }
