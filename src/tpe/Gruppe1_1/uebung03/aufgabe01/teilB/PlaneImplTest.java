@@ -11,7 +11,7 @@ public class PlaneImplTest {
 
     @Before
     public void setup() throws Exception {
-        plane = new PlaneImpl(new FlightRoute("Mannheim", 6, 175));
+        plane = new PlaneImpl(new FlightRoute("Mannheim", 6, 175, 400));
     }
 
     @Test(expected = GeneralFlightSimulatorException.class)
