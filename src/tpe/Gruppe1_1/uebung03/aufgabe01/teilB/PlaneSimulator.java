@@ -125,17 +125,23 @@ public class PlaneSimulator {
                         break;
                 }
             } catch(PlaneTooHighException e) {
+                System.out.println();
                 System.out.println("+++++++++++++++ FAILED ++++++++++++++++");
+                System.out.println("PlaneTooHighException");
                 System.err.println(e.getMessage());
                 planeTooHighExceptionCount++;
                 break;
             } catch(PlaneTooLowException e) {
+                System.out.println();
                 System.out.println("+++++++++++++++ FAILED ++++++++++++++++");
+                System.out.println("PlaneTooLowException");
                 System.err.println(e.getMessage());
                 planeTooLowExceptionCount++;
                 break;
             } catch(GeneralFlightSimulatorException e) {
+                System.out.println();
                 System.out.println("+++++++++++++++ FAILED ++++++++++++++++");
+                System.out.println("GeneralFlightSimulatorException");
                 System.err.println(e.getMessage());
                 generalFlightSimulatorExceptionCount++;
                 break;
