@@ -61,33 +61,33 @@ public class PlaneSimulator {
     }
 
     private static void configureSimulation() throws IOException {
-        //BufferedReader console = new BufferedReader(new InputStreamReader(System.in));
-
         printTitle();
         System.out.println("++++++++++++ CONFIGURATION ++++++++++++");
         System.out.println();
 
+        boolean configureAgain = false;
 
-        System.out.print("Please enter the name for the route: ");
-        String routeName = console.readLine();
-        System.out.print("Please enter the length of the route in kilometers: ");
-        int routeLength = readNumber();
-        System.out.print("Please enter the minimum height (in meters) for the route: ");
-        int routeMinHeight = readNumber();
-        System.out.print("Please enter the maximum height (in meters) for the route: ");
-        int routeMaxHeight = readNumber();
+        do {
+            System.out.print("Please enter the name for the route: ");
+            String routeName = console.readLine();
+            System.out.print("Please enter the length of the route in kilometers: ");
+            int routeLength = readNumber();
+            System.out.print("Please enter the minimum height (in meters) for the route: ");
+            int routeMinHeight = readNumber();
+            System.out.print("Please enter the maximum height (in meters) for the route: ");
+            int routeMaxHeight = readNumber();
 
-        try {
-            route = new FlightRoute(routeName, routeLength, routeMinHeight, routeMaxHeight);
-        } catch (SimulatorConfigurationException e) {
-            e.printInfo();
-        }
+            try {
+                route = new FlightRoute(routeName, routeLength, routeMinHeight, routeMaxHeight);
+            } catch (SimulatorConfigurationException e) {
+                System.err.println(e.getMessage());
+                configureAgain = true;
+            }
+        } while (configureAgain);
 
     }
 
     private static void menu() throws IOException {
-        //BufferedReader console = new BufferedReader(new InputStreamReader(System.in));
-
         while(true) {
             printTitle();
             System.out.println("+++++++++++++ SIMULATION ++++++++++++++");
