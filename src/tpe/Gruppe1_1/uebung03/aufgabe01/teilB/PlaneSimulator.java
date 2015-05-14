@@ -72,9 +72,9 @@ public class PlaneSimulator {
         String routeName = console.readLine();
         System.out.print("Please enter the length of the route in kilometers: ");
         int routeLength = readNumber();
-        System.out.print("Please enter the minimum height for the route: ");
+        System.out.print("Please enter the minimum height (in meters) for the route: ");
         int routeMinHeight = readNumber();
-        System.out.print("Please enter the maximum height for the route: ");
+        System.out.print("Please enter the maximum height (in meters) for the route: ");
         int routeMaxHeight = readNumber();
 
         try {
