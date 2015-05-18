@@ -28,7 +28,7 @@ public class PlaneSimulator {
 
                 boolean waitForChoice = true;
                 while(waitForChoice) {
-                    System.out.println("Do you want to continue? 1)Yes 2)No :");
+                    System.out.print("Do you want to continue? 1)Yes 2)No : ");
                     int cont = readNumber();
                     switch (cont) {
                         case 1:
