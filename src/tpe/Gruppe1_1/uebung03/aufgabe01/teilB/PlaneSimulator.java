@@ -61,7 +61,8 @@ public class PlaneSimulator {
     }
 
     private static void configureSimulation() throws IOException {
-        printTitle();
+        System.out.println();
+        System.out.println("++++++++ FLIGHT SIMULATOR 2000 ++++++++");
         System.out.println("++++++++++++ CONFIGURATION ++++++++++++");
         System.out.println();
 
@@ -89,7 +90,8 @@ public class PlaneSimulator {
 
     private static void menu() throws IOException {
         while(true) {
-            printTitle();
+            System.out.println();
+            System.out.println("++++++++ FLIGHT SIMULATOR 2000 ++++++++");
             System.out.println("+++++++++++++ SIMULATION ++++++++++++++");
             System.out.println(plane.toString());
             System.out.println();
@@ -157,6 +159,10 @@ public class PlaneSimulator {
         }
     }
 
+    /**
+     * This method reads a number and returns it.
+     * @return the number that was read from the console
+     */
     private static int readNumber() {
         boolean waitingForInput = true;
         int number = 0;
@@ -175,10 +181,4 @@ public class PlaneSimulator {
 
         return number;
     }
-
-    private static void printTitle() {
-        System.out.println();
-        System.out.println("++++++++ FLIGHT SIMULATOR 2000 ++++++++");
-    }
-
 }
