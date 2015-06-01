@@ -83,6 +83,10 @@ public class PlaneImpl implements Plane {
         if(currentHeight < 0)
             throw new PlaneTooLowException("You just crashed your plane!");
 
+        // Distance traveled is checked against 2km, because the minimum flight-height
+        // only needs to be checked if the plane is not within  the airport (2km radius in all directions)
+        // for that matter we also subtract 2km from the length of the flightroute because at that point
+        // the plane is inside the airport again.
         if(distanceTraveled >= 2 && distanceTraveled < flightRoute.getLength() - 2 && currentHeight < flightRoute.getMinimumHeight())
             throw new PlaneTooLowException("You're flying too low for your route! Minimum height: (" +
                     flightRoute.getMinimumHeight() + "m) your height (" +
