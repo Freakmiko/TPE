@@ -36,6 +36,8 @@ public class Node {
             // as we're in front of the insert position
             for (int i = getKeys().length - 1; i > index; i--) {
                 getKeys()[i] = getKeys()[i - 1];
+                if(i == getKeys().length - 1)
+                	getChildren()[i+1] = getChildren()[i];
                 getChildren()[i] = getChildren()[i - 1];
             }
             getKeys()[index] = o;

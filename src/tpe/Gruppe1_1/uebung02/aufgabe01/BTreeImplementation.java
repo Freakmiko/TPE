@@ -479,6 +479,9 @@ public class BTreeImplementation implements BTree {
         int rightParentIndex = 0;
         Node rightSibling = null, leftSibling = null;
 
+        if(node.getParent() == null)
+        	return;
+
         // first we get the index of the parent element (right from our node)
         for(int i = 0; i < node.getParent().size() + 1; i++) {
             if(node.getParent().getChildren()[i] == node ) {
@@ -559,6 +562,18 @@ public class BTreeImplementation implements BTree {
     private void rotate(Node deficientNode, Node nodeWithEnoughElements, int parentIndex, int keyIndexToTakeOut, int insertPosInDeficentNode) {
         deficientNode.insert(insertPosInDeficentNode, deficientNode.getParent().getKeys()[parentIndex]);
         deficientNode.getParent().getKeys()[parentIndex] = nodeWithEnoughElements.getKeys()[keyIndexToTakeOut];
+
+        if(nodeWithEnoughElements.getChildren()[keyIndexToTakeOut] != null) {
+        	if(deficientNode.getChildren()[insertPosInDeficentNode+1] == null) {
+        		deficientNode.getChildren()[insertPosInDeficentNode+1] = new Node(order);
+        		deficientNode.getChildren()[insertPosInDeficentNode+1].setParent(deficientNode);
+        	}
+        	for(int i = 0; i < nodeWithEnoughElements.getChildren()[keyIndexToTakeOut].size(); i++) {
+        		deficientNode.getChildren()[insertPosInDeficentNode+1].insert(deficientNode.getChildren()[insertPosInDeficentNode+1].size(),
+        				nodeWithEnoughElements.getChildren()[keyIndexToTakeOut].getKeys()[i]);
+        	}
+        }
+
         nodeWithEnoughElements.remove(nodeWithEnoughElements.getKeys()[keyIndexToTakeOut]);
     }
 }

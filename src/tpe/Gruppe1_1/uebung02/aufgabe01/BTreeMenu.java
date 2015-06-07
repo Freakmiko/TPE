@@ -173,6 +173,30 @@ public class BTreeMenu {
             case 16:
                 return false;
 
+            case 99:
+            		bTreeArray[workingTree].insert(5);
+            		bTreeArray[workingTree].insert(2);
+            		bTreeArray[workingTree].insert(3);
+            		bTreeArray[workingTree].insert(8);
+            		bTreeArray[workingTree].insert(4);
+            		bTreeArray[workingTree].insert(7);
+            		bTreeArray[workingTree].insert(10);
+            		bTreeArray[workingTree].insert(30);
+            		bTreeArray[workingTree].insert(20);
+            		bTreeArray[workingTree].insert(9);
+            		bTreeArray[workingTree].insert(80);
+            		bTreeArray[workingTree].insert(60);
+            		bTreeArray[workingTree].insert(50);
+            		bTreeArray[workingTree].insert(25);
+            		bTreeArray[workingTree].insert(39);
+            		bTreeArray[workingTree].insert(35);
+            		//bTreeArray[workingTree].remove(50);
+            		//bTreeArray[workingTree].insert(55);
+            		//bTreeArray[workingTree].remove(39);
+            		//bTreeArray[workingTree].remove(20);
+            		bTreeArray[workingTree].printInorder();
+
+
             default:
                 break;
 
