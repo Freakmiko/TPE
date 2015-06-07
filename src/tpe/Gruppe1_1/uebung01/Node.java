@@ -1,6 +1,8 @@
 package tpe.Gruppe1_1.uebung01;
 
-public class Node {
+import java.io.Serializable;
+
+public class Node implements Serializable {
 
     private Node parent;
     private Node[] children;
