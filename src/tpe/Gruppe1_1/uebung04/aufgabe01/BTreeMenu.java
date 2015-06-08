@@ -1,7 +1,5 @@
 package tpe.Gruppe1_1.uebung04.aufgabe01;
 
-import tpe.Gruppe1_1.uebung01.BTree;
-
 import java.io.*;
 
 import static gdi.MakeItSimple.*;
@@ -177,14 +175,14 @@ public class BTreeMenu {
             // save tree
             case 16:
                 println("The tree will now be saved");
-                bTreeArray[workingTree].SaveTree("tree" + workingTree + ".tree");
+                bTreeArray[workingTree].saveTree("tree" + workingTree + ".tree");
                 break;
             // load tree
             case 17:
                 println("Please enter the path to the file: ");
                 String path = readLine();
                 try {
-                    bTreeArray[workingTree] = BTreeImplementation.LoadTree(path);
+                    bTreeArray[workingTree] = BTreeImplementation.loadTree(path);
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }

@@ -203,13 +203,13 @@ public class CarBTreeMenu {
                 break;
             case 14:
                 println("The tree will now be saved");
-                bTreeArray[workingTree].SaveTree("tree" + workingTree + ".tree");
+                bTreeArray[workingTree].saveTree("tree" + workingTree + ".tree");
                 break;
             case 15:
                 println("Please enter the path to the file: ");
                 String path = readLine();
                 try {
-                    bTreeArray[workingTree] = BTreeImplementation.LoadTree(path);
+                    bTreeArray[workingTree] = BTreeImplementation.loadTree(path);
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }

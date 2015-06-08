@@ -579,48 +579,43 @@ public class BTreeImplementation implements BTree, Serializable {
         nodeWithEnoughElements.remove(nodeWithEnoughElements.getKeys()[keyIndexToTakeOut]);
     }
 
-    public void SaveTree(String path) {
+    /**
+     * This method saves the tree to a file
+     *
+     * @param path The path (including filename) the tree will be saved to
+     */
+    public void saveTree(String path) {
         ObjectOutputStream stream = null;
         try {
             stream = new ObjectOutputStream(new FileOutputStream(path));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
             stream.writeObject(this);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
             stream.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static BTreeImplementation LoadTree(String path) throws FileNotFoundException {
+    /**
+     * This method loads a tree from a file
+     * and returns that tree.
+     * @param path The path to the file that contains the tree;
+     * @return Returns the tree from the file
+     * @throws FileNotFoundException
+     */
+    public static BTreeImplementation loadTree(String path) throws FileNotFoundException {
         ObjectInputStream stream = null;
+        BTreeImplementation newTree = null;
 
         if (!MakeItSimple.isFilePresent(path))
             throw new FileNotFoundException(path + " could not be found!");
 
-
         try {
             stream = new ObjectInputStream(new FileInputStream(path));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        BTreeImplementation newTree = null;
-        try {
             newTree = (BTreeImplementation) stream.readObject();
+            stream.close();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        try {
-            stream.close();
-        } catch (IOException e) {
             e.printStackTrace();
         }
 
