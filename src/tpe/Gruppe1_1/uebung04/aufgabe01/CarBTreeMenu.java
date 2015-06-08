@@ -202,8 +202,9 @@ public class CarBTreeMenu {
                 }
                 break;
             case 14:
-                println("The tree will now be saved");
-                bTreeArray[workingTree].saveTree("tree" + workingTree + ".tree");
+                println("Please enter the name of the file");
+                String filename = readLine();
+                bTreeArray[workingTree].saveTree(filename);
                 break;
             case 15:
                 println("Please enter the path to the file: ");
