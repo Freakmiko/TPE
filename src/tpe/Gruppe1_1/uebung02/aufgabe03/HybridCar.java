@@ -1,6 +1,8 @@
 package tpe.Gruppe1_1.uebung02.aufgabe03;
 
-public class HybridCar extends Car implements Gasoline, Electric {
+import java.io.Serializable;
+
+public class HybridCar extends Car implements Gasoline, Electric, Serializable {
 
     boolean highVoltage;
     int emissionTier;

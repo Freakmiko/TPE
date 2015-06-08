@@ -1,10 +1,12 @@
 package tpe.Gruppe1_1.uebung02.aufgabe03;
 
-public class ElectricCar extends Car implements Electric {
+import java.io.Serializable;
+
+public class ElectricCar extends Car implements Electric, Serializable {
 
     private boolean highVoltage;
 
-    ElectricCar(String brand, int constructionYear, int price, boolean highVoltage) {
+    public ElectricCar(String brand, int constructionYear, int price, boolean highVoltage) {
         super(brand, constructionYear, price);
         this.highVoltage = highVoltage;
     }

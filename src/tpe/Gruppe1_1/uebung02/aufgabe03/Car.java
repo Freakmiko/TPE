@@ -1,6 +1,8 @@
 package tpe.Gruppe1_1.uebung02.aufgabe03;
 
-public abstract class Car implements Comparable {
+import java.io.Serializable;
+
+public abstract class Car implements Comparable, Serializable {
 
     private static int carIDCounter = 0;
 
