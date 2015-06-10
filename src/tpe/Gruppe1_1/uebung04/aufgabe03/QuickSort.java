@@ -1,7 +1,5 @@
 package tpe.Gruppe1_1.uebung04.aufgabe03;
 
-import java.util.Collections;
-
 public class QuickSort extends Thread implements SortAlgorithm{
 
     private static ThreadGroup threadGroup = new ThreadGroup("quickSorty");
@@ -12,25 +10,30 @@ public class QuickSort extends Thread implements SortAlgorithm{
         for(int i=0; i < arr.length; i++)
             arr[i] = (int)(Math.random() * 100);
 
-        for(int i=0; i < arr.length; i++)
-            System.out.print(arr[i] + ";");
+        for (Integer anArr1 : arr) System.out.print(anArr1 + ";");
         System.out.println();
+
         s.sort(arr);
 
         System.out.println("YAAAAAYY WE'RE FINISHED==================================");
-        for(int i=0; i < arr.length; i++)
-            System.out.print(arr[i] + ";");
+        for (Integer anArr : arr) System.out.print(anArr + ";");
 
     }
 
-    public int lowerBound;
-    public int upperBound;
-    public Comparable[] arr;
+    private int lowerBound;
+    private int upperBound;
+    private Comparable[] arr;
 
     public QuickSort() {
         super(threadGroup, "quickSortThread");
     }
 
+    /**
+     * This Method sorts a given array using some
+     * algorithm.
+     *
+     * @param array The array that should be sorted
+     */
     @Override
     public void sort(Comparable[] array) {
         quickSort(array, 0, array.length - 1);
@@ -46,54 +49,51 @@ public class QuickSort extends Thread implements SortAlgorithm{
         if (upper <= lower) return ;
 
         System.out.println(this.getName());
-        for(int counter=0; counter < array.length; counter++)
-            System.out.print(array[counter] + ";");
+        for (Comparable anArray1 : array) System.out.print(anArray1 + ";");
         System.out.println();
 
         int i = split(array, lower, upper);
 
-        for(int counter=0; counter < array.length; counter++)
-            System.out.print(array[counter] + ";");
+        for (Comparable anArray : array) System.out.print(anArray + ";");
         System.out.println();
 
 
         Thread t1 = new QuickSort() {
             {
-                lowerBound = lower;
-                upperBound = i - 1;
-                arr = array;
+                setLowerBound(lower);
+                setUpperBound(i - 1);
+                setArr(array);
             }
         };
         t1.run();
 
         Thread t2 = new QuickSort() {
             {
-                lowerBound = i + 1;
-                upperBound = upper;
-                arr = array;
+                setLowerBound(i + 1);
+                setUpperBound(upper);
+                setArr(array);
             }
         };
         t2.run();
     }
 
     public int split(Comparable[] array, int lower, int upper) {
-        int pivotElement = upper;
         int index = lower;
 
         for (int pointer = lower; pointer < upper; pointer++) {
-            if(array[pointer].compareTo(array[pivotElement]) <= 0) {
+            if(array[pointer].compareTo(array[upper]) <= 0) {
                 swap(array, index, pointer);
                 index++;
             }
         }
 
-        swap(array, index, pivotElement);
+        swap(array, index, upper);
         return index;
     }
 
     @Override
     public void run() {
-        quickSort(arr, lowerBound, upperBound);
+        quickSort(getArr(), getLowerBound(), getUpperBound());
     }
 
     public void swap(Comparable[] array, int el01, int el02) {
@@ -103,4 +103,27 @@ public class QuickSort extends Thread implements SortAlgorithm{
         array[el02] = temp;
     }
 
+    private int getLowerBound() {
+        return lowerBound;
+    }
+
+    private void setLowerBound(int lowerBound) {
+        this.lowerBound = lowerBound;
+    }
+
+    private int getUpperBound() {
+        return upperBound;
+    }
+
+    private void setUpperBound(int upperBound) {
+        this.upperBound = upperBound;
+    }
+
+    private Comparable[] getArr() {
+        return arr;
+    }
+
+    private void setArr(Comparable[] arr) {
+        this.arr = arr;
+    }
 }
