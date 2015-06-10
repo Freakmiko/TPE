@@ -43,9 +43,9 @@ In Java kommunizieren die Threads ueber den gemeinsamen genutzen Speicher (heap)
 Java unterstuetzt die Synchronisierung von Threads mittels Monitoren, ueber Ereignisse 
 oder durch das warten auf das Ende eines anderen Threads (join).
 \\
-Im Falle von Monitoren werden Threads durch bestimmte abschnitte Synchronisiert. Ein 
+Im Falle von Monitoren werden Threads durch bestimmte Abschnitte Synchronisiert. Ein
 Monitor erlaubt dabei jeweils nur einem Thread den Zugriff auf die synchronisierte Stelle. 
-Eine solche "gesperrte" Stelle kann man innerhalb einer Methode mit
+Eine solche gesperrte Stelle kann man innerhalb einer Methode mit
 
 \begin{lstlisting}{synchronize in Methode}
 synchronized(this) { }
@@ -60,9 +60,9 @@ synchronized void m () { ... }
 \end{lstlisting}
 
 Dadurch hat an dieser Stelle immer nur ein Thread Zugriff, jeder weitere Thread der nun an 
-diese Stelle kommt traegt sich in eine Warteliste ein und muss nun warten bis der Thread der 
-momentan im Monitor ist diesen verlassen hat. Somit kann man kritische Stellen in einem Programm 
-kapseln und somit sicher gehen das auch bei vielen Threads keine Probleme entstehen.
+diese Stelle kommt, traegt sich in eine Warteliste ein und muss nun warten bis der Thread, der
+momentan im Monitor ist, diesen verlassen hat. Somit kann man kritische Stellen in einem Programm
+kapseln und somit sicher gehen, das auch bei vielen Threads keine Probleme entstehen.
 \\
 Ein Thread kann die Sperre des Monitors temporaer zuruecksetzen indem er \textbf{\textit{wait}} 
 benutzt. Ein Thread kann zusaetzlich einen (beliebigen) anderen Thread per \textbf{\textit{notify}} 
