@@ -4,16 +4,20 @@ import java.util.Collections;
 
 public class QuickSort extends Thread implements SortAlgorithm{
 
+    private static ThreadGroup threadGroup = new ThreadGroup("quickSorty");
+
     public static void main(String[] args) {
         QuickSort s = new QuickSort();
-        Integer[] arr = new Integer[10000];
+        Integer[] arr = new Integer[9];
         for(int i=0; i < arr.length; i++)
-            arr[i] = (int)(Math.random() * 100000);
+            arr[i] = (int)(Math.random() * 100);
 
         for(int i=0; i < arr.length; i++)
             System.out.print(arr[i] + ";");
         System.out.println();
         s.sort(arr);
+
+        System.out.println("YAAAAAYY WE'RE FINISHED==================================");
         for(int i=0; i < arr.length; i++)
             System.out.print(arr[i] + ";");
 
@@ -24,12 +28,18 @@ public class QuickSort extends Thread implements SortAlgorithm{
     public Comparable[] arr;
 
     public QuickSort() {
-
+        super(threadGroup, "quickSortThread");
     }
 
     @Override
     public void sort(Comparable[] array) {
         quickSort(array, 0, array.length - 1);
+        while(threadGroup.activeCount() > 0)
+            try {
+                wait(160);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
     }
 
     private void quickSort(Comparable[] array, int lower, int upper) {
