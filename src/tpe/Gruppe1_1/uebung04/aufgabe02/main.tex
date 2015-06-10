@@ -1,0 +1,84 @@
+\documentclass[12pt]{scrartcl}
+
+\usepackage{listings}
+
+% the following is needed for syntax highlighting
+\usepackage{color}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{ %
+  language=Java,                  % the language of the code
+  basicstyle=\footnotesize,       % the size of the fonts that are used for the code
+  numbers=left,                   % where to put the line-numbers
+  numberstyle=\tiny\color{gray},  % the style that is used for the line-numbers
+  stepnumber=1,                   % the step between two line-numbers. If it's 1, each line 
+                                  % will be numbered
+  numbersep=5pt,                  % how far the line-numbers are from the code
+  backgroundcolor=\color{white},  % choose the background color. You must add \usepackage{color}
+  showspaces=false,               % show spaces adding particular underscores
+  showstringspaces=false,         % underline spaces within strings
+  showtabs=false,                 % show tabs within strings adding particular underscores
+  frame=single,                   % adds a frame around the code
+  rulecolor=\color{black},        % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. commens (green here))
+  tabsize=4,                      % sets default tabsize to 2 spaces
+  captionpos=b,                   % sets the caption-position to bottom
+  breaklines=true,                % sets automatic line breaking
+  breakatwhitespace=false,        % sets if automatic breaks should only happen at whitespace
+  title=\lstname,                 % show the filename of files included with \lstinputlisting;
+                                  % also try caption instead of title
+  keywordstyle=\color{blue},          % keyword style
+  commentstyle=\color{dkgreen},       % comment style
+  stringstyle=\color{mauve},         % string literal style
+  escapeinside={\%*}{*)},            % if you want to add a comment within your code
+  morekeywords={*,...}               % if you want to add more keywords to the set
+}
+
+
+\begin{document}
+\section*{Aufgabe 2}
+In Java kommunizieren die Threads ueber den gemeinsamen genutzen Speicher (heap).
+Java unterstuetzt die Synchronisierung von Threads mittels Monitoren, ueber Ereignisse 
+oder durch das warten auf das Ende eines anderen Threads (join).
+\\
+Im Falle von Monitoren werden Threads durch bestimmte abschnitte Synchronisiert. Ein 
+Monitor erlaubt dabei jeweils nur einem Thread den Zugriff auf die synchronisierte Stelle. 
+Eine solche "gesperrte" Stelle kann man innerhalb einer Methode mit
+
+\begin{lstlisting}{synchronize in Methode}
+synchronized(this) { }
+// oder fuer ein bestimmtes Objekt
+synchronized(Objekt) { }
+\end{lstlisting}
+
+erzeugen. Man kann auch ganze Methoden synchronisieren
+
+\begin{lstlisting}{synchronize auf Methode}
+synchronized void m () { ... }
+\end{lstlisting}
+
+Dadurch hat an dieser Stelle immer nur ein Thread Zugriff, jeder weitere Thread der nun an 
+diese Stelle kommt traegt sich in eine Warteliste ein und muss nun warten bis der Thread der 
+momentan im Monitor ist diesen verlassen hat. Somit kann man kritische Stellen in einem Programm 
+kapseln und somit sicher gehen das auch bei vielen Threads keine Probleme entstehen.
+\\
+Ein Thread kann die Sperre des Monitors temporaer zuruecksetzen indem er \textbf{\textit{wait}} 
+benutzt. Ein Thread kann zusaetzlich einen (beliebigen) anderen Thread per \textbf{\textit{notify}} 
+aus der Warteliste entfernen und die temporaer aufgehobenen Sperren wieder herstellen. Das gleiche 
+passiert mit \textbf{\textit{notifyAll}} ausser das dort alle Threads aus der Warteliste entfernt werden. 
+\textbf{\textit{notify}}, \textbf{\textit{notifyAll}} und \textbf{\textit{wait}} gelten nur fuer 
+gesperrte Objekte. Zusaetzlich sollte \textbf{\textit{wait}} immer in einer Schleife aufgerufen werden 
+damit auch immer ueberprueft werden kann ob ein gewollter Zustand eingetreten ist.
+\\
+Eine weitere Methode der Synchronisation ist \textbf{\textit{join}}. Mit dieser Methode wartet ein Thread 
+bis der Thread auf den Join aufgerufen wurde fertig ist, optional kann man hier auch noch eine Zeit angeben 
+die gewartet werden soll bevor automatisch weitergemacht wird.
+\\
+Sollte nicht synchronisiert werden, so koennen verschiedenste Probleme eintreten. Beispielsweise koennte 
+ein Thread etwas auf eine int variable schreiben wenn diese kleiner als 50 ist (und dabei z.B. 50 addieren), 
+sollte zu diesem Zeitpunkt ein anderer Thread gerade dieselbe abfrage gemacht haben und zu diesem Zeitpunkt war 
+auch bei ihm der Wert kleiner als 50 koennte sich der Wert nun schon auf z.B. 90 abgeaendert haben. Der zweite 
+Thread addiert nun trotzdem 50 hinzu und somit kommt es zu ungewollten Zustaenden.
+\end{document}
