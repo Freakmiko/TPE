@@ -1,7 +1,5 @@
 package tpe.Gruppe1_1.uebung04.aufgabe03;
 
-import java.util.Collections;
-
 public class QuickSort extends Thread implements SortAlgorithm{
 
     private static ThreadGroup threadGroup = new ThreadGroup("quickSorty");

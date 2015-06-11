@@ -34,4 +34,11 @@ public class QuickSortTest {
         for(int i = 0; i < arrSorted.length; i++)
             assertEquals(arrSorted[i], arr[i]);
     }
+
+    @Test
+    public void testSortArrayWithOneElement() throws Exception {
+        Integer[] arr = new Integer[] { 1 };
+        sortAlgorithm.sort(arr);
+        assertEquals((Integer)1, arr[0]);
+    }
 }
