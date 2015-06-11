@@ -57,6 +57,7 @@ public class QuickSort extends Thread implements SortAlgorithm{
         System.out.println();
 
 
+        // Creates a thread for the left part of the array
         Thread t1 = new QuickSort() {
             {
                 lowerBound = lower;
@@ -66,6 +67,7 @@ public class QuickSort extends Thread implements SortAlgorithm{
         };
         t1.run();
 
+        // Creates a thread for the right part of the array
         Thread t2 = new QuickSort() {
             {
                 lowerBound = i + 1;
